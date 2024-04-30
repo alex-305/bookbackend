@@ -9,8 +9,13 @@ import (
 
 func (s *APIServer) defineRoutes(router *mux.Router) {
 	//Auth Routes
-	router.HandleFunc("/login", auth.HandleLogin).Methods(http.MethodPost)
-	router.HandleFunc("/signup", auth.HandleCreateAccount).Methods(http.MethodPost)
+	router.HandleFunc("/login", func(w http.ResponseWriter, r *http.Request) {
+		auth.HandleLogin(w, r, s.DB)
+	}).Methods(http.MethodPost)
+
+	router.HandleFunc("/signup", func(w http.ResponseWriter, r *http.Request) {
+		auth.HandleSignUp(w, r, s.DB)
+	}).Methods(http.MethodPost)
 	//User Routes
 
 }

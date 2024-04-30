@@ -9,7 +9,7 @@ type DB struct {
 	*sql.DB
 }
 
-func StartDB() (*DB, error) {
+func Start() (*DB, error) {
 	dsn := url.URL{
 		User:   url.UserPassword("blank", "blank"),
 		Host:   "localhost:5432",
