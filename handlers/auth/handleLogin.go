@@ -1,7 +1,11 @@
 package auth
 
-import "net/http"
+import (
+	"net/http"
 
-func HandleLogin(w http.ResponseWriter, r *http.Request) {
+	"github.com/alex-305/bookbackend/db"
+)
+
+func HandleLogin(w http.ResponseWriter, r *http.Request, db *db.DB) {
 
 }
