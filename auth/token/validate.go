@@ -7,7 +7,7 @@ import (
 	"github.com/joho/godotenv"
 )
 
-func ValidateToken(token string) error {
+func Validate(token string) error {
 	godotenv.Load()
 	secretKey := os.Getenv("SECRET_KEY")
 
