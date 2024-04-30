@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/alex-305/bookbackend/api"
 	"github.com/alex-305/bookbackend/db"
+	_ "github.com/lib/pq"
 )
 
 func main() {

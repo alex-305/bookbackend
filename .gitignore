@@ -1,6 +1,7 @@
 
 .*
 .env
+/bookbackend
 
 #Excluded from the ignore
 !.gitignore

@@ -11,10 +11,10 @@ type DB struct {
 
 func Start() (*DB, error) {
 	dsn := url.URL{
-		User:   url.UserPassword("blank", "blank"),
+		User:   url.UserPassword("postgres", "password"),
 		Host:   "localhost:5432",
 		Scheme: "postgres",
-		Path:   "databasename",
+		Path:   "book",
 	}
 
 	db, err := sql.Open("postgres", dsn.String())
