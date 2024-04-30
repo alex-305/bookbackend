@@ -8,7 +8,14 @@ import (
 )
 
 func SignUp(creds models.Credentials, db *db.DB) (string, error) {
+
 	hashedPassword, err := helpers.HashPassword(creds.Password)
+
+	if err != nil {
+		return "", err
+	}
+
+	err = helpers.ValidateUsername(creds.Username)
 
 	if err != nil {
 		return "", err
