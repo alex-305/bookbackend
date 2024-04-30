@@ -1,5 +1,23 @@
 package main
 
-func main() {
+import (
+	"github.com/alex-305/bookbackend/api"
+	"github.com/alex-305/bookbackend/db"
+)
 
+func main() {
+	db, err := db.StartDB()
+	if err != nil {
+		panic(err)
+	}
+
+	defer db.Close()
+
+	server := api.CreateServer("localhost:8080", db)
+
+	err = server.Start()
+
+	if err != nil {
+		panic(err)
+	}
 }

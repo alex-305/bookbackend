@@ -1,4 +1,4 @@
-package auth
+package token
 
 import (
 	"errors"
@@ -37,20 +37,4 @@ func GenerateJWT(username string) (string, error) {
 		return "", err
 	}
 	return tokenString, nil
-}
-
-func ValidateToken(token string) error {
-	godotenv.Load()
-	secretKey := os.Getenv("SECRET_KEY")
-
-	claims := &Claims{}
-
-	_, err := jwt.ParseWithClaims(token, claims, func(t *jwt.Token) (interface{}, error) {
-		return []byte(secretKey), nil
-	})
-
-	if err != nil {
-		return err
-	}
-
 }
