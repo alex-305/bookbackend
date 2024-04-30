@@ -14,7 +14,7 @@ type Claims struct {
 	username string
 }
 
-func GenerateJWT(username string) (string, error) {
+func Generate(username string) (string, error) {
 	token := jwt.New(jwt.SigningMethodHS256)
 	claims, ok := token.Claims.(jwt.MapClaims)
 
