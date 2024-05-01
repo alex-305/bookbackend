@@ -17,5 +17,8 @@ func (s *APIServer) defineRoutes(router *mux.Router) {
 		auth.HandleSignUp(w, r, s.DB)
 	}).Methods(http.MethodPost)
 	//User Routes
+	//Review Routes
+	router.HandleFunc("/review", func(w http.ResponseWriter, r *http.Request) {
 
+	})
 }

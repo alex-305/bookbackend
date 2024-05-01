@@ -14,7 +14,7 @@ func Login(creds models.Credentials, tok string, db *db.DB) (string, error) {
 		return "", err
 	}
 
-	err = helpers.ComparePassword(user.Password, creds.Password)
+	err = helpers.ComparePassword(creds.Password, user.Password)
 
 	if err != nil {
 		return "", err

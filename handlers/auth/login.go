@@ -29,6 +29,7 @@ func HandleLogin(w http.ResponseWriter, r *http.Request, db *db.DB) {
 
 	token, err = auth.Login(creds, token, db)
 	if err != nil {
+		log.Printf("%s", err)
 		http.Error(w, "Could not log user in", http.StatusBadRequest)
 		return
 	}
