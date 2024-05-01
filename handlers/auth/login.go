@@ -2,6 +2,7 @@ package auth
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
 
 	"github.com/alex-305/bookbackend/auth"
@@ -11,6 +12,7 @@ import (
 )
 
 func HandleLogin(w http.ResponseWriter, r *http.Request, db *db.DB) {
+	log.Printf("handleLogin running...")
 	if r.Method != http.MethodPost {
 		http.Error(w, "Method not allowed", http.StatusBadRequest)
 		return
@@ -27,7 +29,7 @@ func HandleLogin(w http.ResponseWriter, r *http.Request, db *db.DB) {
 
 	token, err = auth.Login(creds, token, db)
 	if err != nil {
-		http.Error(w, "Could not create account", http.StatusBadRequest)
+		http.Error(w, "Could not log user in", http.StatusBadRequest)
 		return
 	}
 	tokenJSON := map[string]string{"token": token}

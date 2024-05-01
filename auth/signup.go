@@ -15,9 +15,9 @@ func SignUp(creds models.Credentials, db *db.DB) (string, error) {
 		return "", err
 	}
 
-	err = helpers.ValidateUsername(creds.Username)
+	ok := helpers.ValidateUsername(creds.Username)
 
-	if err != nil {
+	if !ok {
 		return "", err
 	}
 

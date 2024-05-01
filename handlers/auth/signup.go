@@ -2,6 +2,7 @@ package auth
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
 
 	"github.com/alex-305/bookbackend/auth"
@@ -10,6 +11,7 @@ import (
 )
 
 func HandleSignUp(w http.ResponseWriter, r *http.Request, db *db.DB) {
+	log.Printf("signup running")
 	if r.Method != http.MethodPost {
 		http.Error(w, "Method not allowed", http.StatusBadRequest)
 		return
@@ -24,6 +26,7 @@ func HandleSignUp(w http.ResponseWriter, r *http.Request, db *db.DB) {
 
 	token, err := auth.SignUp(creds, db)
 	if err != nil {
+		log.Printf("%s", err)
 		http.Error(w, "Could not create account", http.StatusBadRequest)
 		return
 	}

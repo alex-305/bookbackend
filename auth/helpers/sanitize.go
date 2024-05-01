@@ -1,7 +1,6 @@
 package helpers
 
 import (
-	"errors"
 	"regexp"
 )
 
@@ -10,9 +9,15 @@ func sanitize(s, rgx string) string {
 	return pattern.ReplaceAllString(s, "")
 }
 
-func ValidateUsername(username string) error {
-	if sanitize(username, "^[a-zA-Z0-9_.]*$") != username {
-		return errors.New("invalid username")
+func validate(s, rgx string) bool {
+	regex, err := regexp.Compile(rgx)
+	if err != nil {
+		return false
 	}
-	return nil
+
+	return regex.MatchString(s)
+}
+
+func ValidateUsername(username string) bool {
+	return validate(username, "^[a-zA-Z0-9_.]*$")
 }
