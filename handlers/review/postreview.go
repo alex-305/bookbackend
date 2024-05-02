@@ -30,7 +30,7 @@ func HandlePostReview(w http.ResponseWriter, r *http.Request, db *db.DB) {
 		return
 	}
 
-	err = review.PostReview(tok, rev.Content, rev.Rating, db)
+	err = review.PostReview(tok, rev, db)
 
 	if err != nil {
 		http.Error(w, "Could not post review", http.StatusBadRequest)
