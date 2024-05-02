@@ -6,17 +6,17 @@ import (
 	"github.com/alex-305/bookbackend/models"
 )
 
-func PostReview(tok string, rev models.Review, d *db.DB) error {
+func PostReview(tok string, rev models.Review, d *db.DB) (string, error) {
 	username, err := token.Validate(tok)
 
 	if err != nil {
-		return err
+		return "", err
 	}
 
-	err = d.PostReview(username, rev)
+	reviewid, err := d.PostReview(username, rev)
 
 	if err != nil {
-		return err
+		return "", err
 	}
-	return nil
+	return reviewid, nil
 }

@@ -30,13 +30,22 @@ func HandlePostReview(w http.ResponseWriter, r *http.Request, db *db.DB) {
 		return
 	}
 
-	err = review.PostReview(tok, rev, db)
+	reviewid, err := review.PostReview(tok, rev, db)
 
 	if err != nil {
 		http.Error(w, "Could not post review", http.StatusBadRequest)
 		return
 	}
 
-	w.WriteHeader(http.StatusOK)
+	reviewIDJSON := map[string]string{"reviewid": reviewid}
+	response, err := json.Marshal(reviewIDJSON)
+
+	if err != nil {
+		http.Error(w, "Could not parse json response", http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(response)
 
 }

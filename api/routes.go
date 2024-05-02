@@ -22,4 +22,7 @@ func (s *APIServer) defineRoutes(router *mux.Router) {
 	router.HandleFunc("/review", func(w http.ResponseWriter, r *http.Request) {
 		review.HandlePostReview(w, r, s.DB)
 	}).Methods(http.MethodPost)
+	router.HandleFunc("/review", func(w http.ResponseWriter, r *http.Request) {
+		review.HandleDeleteReview(w, r, s.DB)
+	}).Methods(http.MethodDelete)
 }
