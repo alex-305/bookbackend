@@ -1,4 +1,4 @@
-package auth
+package users
 
 import (
 	"github.com/alex-305/bookbackend/auth/helpers"
@@ -20,7 +20,7 @@ func Login(creds models.Credentials, tok string, db *db.DB) (string, error) {
 		return "", err
 	}
 
-	err = token.Validate(tok)
+	_, err = token.Validate(tok)
 
 	if err != nil {
 		tok, err = token.Generate(user.Username)

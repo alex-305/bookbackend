@@ -1,4 +1,4 @@
-package auth
+package users
 
 import (
 	"github.com/alex-305/bookbackend/auth/helpers"

@@ -5,10 +5,10 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/alex-305/bookbackend/auth"
 	"github.com/alex-305/bookbackend/db"
 	"github.com/alex-305/bookbackend/handlers/helpers"
 	"github.com/alex-305/bookbackend/models"
+	"github.com/alex-305/bookbackend/services/users"
 )
 
 func HandleLogin(w http.ResponseWriter, r *http.Request, db *db.DB) {
@@ -27,7 +27,8 @@ func HandleLogin(w http.ResponseWriter, r *http.Request, db *db.DB) {
 
 	token, _ := helpers.GetToken(r)
 
-	token, err = auth.Login(creds, token, db)
+	token, err = users.Login(creds, token, db)
+
 	if err != nil {
 		log.Printf("%s", err)
 		http.Error(w, "Could not log user in", http.StatusBadRequest)

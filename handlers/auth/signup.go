@@ -5,9 +5,9 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/alex-305/bookbackend/auth"
 	"github.com/alex-305/bookbackend/db"
 	"github.com/alex-305/bookbackend/models"
+	"github.com/alex-305/bookbackend/services/users"
 )
 
 func HandleSignUp(w http.ResponseWriter, r *http.Request, db *db.DB) {
@@ -24,7 +24,8 @@ func HandleSignUp(w http.ResponseWriter, r *http.Request, db *db.DB) {
 		return
 	}
 
-	token, err := auth.SignUp(creds, db)
+	token, err := users.SignUp(creds, db)
+
 	if err != nil {
 		log.Printf("%s", err)
 		http.Error(w, "Could not create account", http.StatusBadRequest)
