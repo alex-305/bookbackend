@@ -1,27 +1,45 @@
 # Book Backend
 
 ## Endpoints
-#### POST /login
+### POST /login
 **Params:**
     Username string
+
 	Password string
+
 	Email    string
+
     token    string
-#### POST /signup
+
+### POST /signup
 **Params:**
+
     Username string
+
 	Password string
+
 	Email    string
-#### POST /review
+
+### POST /review
 **Params:**
+
 	Content   string
+
 	Rating    uint8
+
 	Username  string
+
 	WorksID   string
+
     token     string
-#### DELETE /review
+
+### DELETE /review
 **Params:**
+
     ReviewID string
+
     token    string
-#### PUT /review
+
+### PUT /review
+
 *not yet implemented*
