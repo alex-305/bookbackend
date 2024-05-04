@@ -12,6 +12,10 @@
 
     token    string
 
+**Response:**
+
+	token string
+
 ### POST /signup
 **Params:**
 
@@ -21,6 +25,10 @@
 
 	Email    string
 
+**Response:**
+
+	token string
+
 ### POST /review
 **Params:**
 
@@ -28,21 +36,36 @@
 
 	Rating    uint8
 
-	Username  string
-
 	WorksID   string
 
     token     string
+
+**Response:**
+
+	reviewid string
 
 ### GET /review\[reviewid\]
 **Params:**
 
 	N/A
 
+**Response:**
+
+	Content string
+
+	Username string
+
+	Rating uint8
+
+
 ### DELETE /review\[reviewid\]
 **Params:**
 
     token    string
+
+**Response:**
+
+	status
 
 ### PUT /review
 
