@@ -38,3 +38,16 @@ func (db *DB) DeleteReview(reviewid string) error {
 
 	return nil
 }
+
+func (db *DB) GetReview(reviewid string) (models.Review, error) {
+	query := `SELECT username, worksid, reviewid, content, rating, post_date FROM reviews WHERE reviewid = $1`
+
+	var rev models.Review
+	err := db.QueryRow(query, reviewid).Scan(&rev)
+
+	if err != nil {
+		return models.Review{}, err
+	}
+
+	return rev, nil
+}

@@ -10,7 +10,7 @@ import (
 	"github.com/alex-305/bookbackend/services/review"
 )
 
-func HandlePostReview(w http.ResponseWriter, r *http.Request, db *db.DB) {
+func HandlePost(w http.ResponseWriter, r *http.Request, db *db.DB) {
 	if r.Method != http.MethodPost {
 		http.Error(w, "Method not allowed", http.StatusBadRequest)
 		return
@@ -30,7 +30,7 @@ func HandlePostReview(w http.ResponseWriter, r *http.Request, db *db.DB) {
 		return
 	}
 
-	reviewid, err := review.PostReview(tok, rev, db)
+	reviewid, err := review.Post(tok, rev, db)
 
 	if err != nil {
 		http.Error(w, "Could not post review", http.StatusBadRequest)
