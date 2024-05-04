@@ -2,6 +2,7 @@ package review
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
 
 	"github.com/alex-305/bookbackend/db"
@@ -21,6 +22,7 @@ func HandleGet(w http.ResponseWriter, r *http.Request, d *db.DB) {
 	review, err := review.Get(reviewid, d)
 
 	if err != nil {
+		log.Printf("%s", err)
 		http.Error(w, "Could not retrieve review", http.StatusNotFound)
 		return
 	}

@@ -43,7 +43,7 @@ func (db *DB) GetReview(reviewid string) (models.Review, error) {
 	query := `SELECT username, worksid, reviewid, content, rating, post_date FROM reviews WHERE reviewid = $1`
 
 	var rev models.Review
-	err := db.QueryRow(query, reviewid).Scan(&rev)
+	err := db.QueryRow(query, reviewid).Scan(&rev.Username, &rev.WorksID, &rev.ReviewID, &rev.Content, &rev.Rating, &rev.Post_date)
 
 	if err != nil {
 		return models.Review{}, err
