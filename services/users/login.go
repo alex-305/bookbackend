@@ -8,13 +8,13 @@ import (
 )
 
 func Login(creds models.Credentials, tok string, db *db.DB) (string, error) {
-	user, err := db.GetUser(creds.Username)
+	dbcreds, err := db.GetCredentials(creds.Username)
 
 	if err != nil {
 		return "", err
 	}
 
-	err = helpers.ComparePassword(creds.Password, user.Password)
+	err = helpers.ComparePassword(creds.Password, dbcreds.Password)
 
 	if err != nil {
 		return "", err
@@ -23,7 +23,7 @@ func Login(creds models.Credentials, tok string, db *db.DB) (string, error) {
 	_, err = token.Validate(tok)
 
 	if err != nil {
-		tok, err = token.Generate(user.Username)
+		tok, err = token.Generate(dbcreds.Username)
 		if err != nil {
 			return "", err
 		}
