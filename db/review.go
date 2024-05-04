@@ -11,7 +11,7 @@ func (db *DB) PostReview(username string, rev models.Review) (string, error) {
 		return "", err
 	}
 
-	query := `INSERT INTO reviews(username, worksID, content, rating) VALUES($1, $2, $3) RETURNING reviewID;`
+	query := `INSERT INTO reviews(username, worksID, content, rating) VALUES($1, $2, $3, $4) RETURNING reviewID;`
 
 	var reviewid string
 	err = tx.QueryRow(query, username, rev.WorksID, rev.Content, rev.Rating).Scan(&reviewid)

@@ -11,7 +11,7 @@ import (
 
 type Claims struct {
 	jwt.StandardClaims
-	username string
+	Username string
 }
 
 func Generate(username string) (string, error) {

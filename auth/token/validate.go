@@ -1,6 +1,7 @@
 package token
 
 import (
+	"log"
 	"os"
 
 	"github.com/golang-jwt/jwt"
@@ -21,5 +22,7 @@ func Validate(token string) (string, error) {
 		return "", err
 	}
 
-	return claims.username, nil
+	log.Printf("USERNAME FROM TOKEN:%s", claims.Username)
+
+	return claims.Username, nil
 }
