@@ -34,13 +34,17 @@
 
     token     string
 
-### DELETE /review
+### GET /review\[reviewid\]
 **Params:**
 
-    ReviewID string
+	N/A
+
+### DELETE /review\[reviewid\]
+**Params:**
 
     token    string
 
 ### PUT /review
+
 
 *not yet implemented*
