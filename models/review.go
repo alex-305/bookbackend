@@ -3,10 +3,10 @@ package models
 import "time"
 
 type Review struct {
-	Content   string    `json:"Content"`
-	Rating    uint8     `json:"Rating"`
-	Username  string    `json:"Username"`
-	WorksID   string    `json:"WorksID"`
-	ReviewID  string    `json:"ReviewID"`
-	Post_date time.Time `json:"Post_date"`
+	Content   string    `json:"content"`
+	Rating    uint8     `json:"rating"`
+	Username  string    `json:"username"`
+	WorksID   string    `json:"worksid"`
+	ReviewID  string    `json:"reviewid"`
+	Post_date time.Time `json:"post_date"`
 }
