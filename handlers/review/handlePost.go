@@ -8,7 +8,7 @@ import (
 	"github.com/alex-305/bookbackend/db"
 	"github.com/alex-305/bookbackend/handlers/helpers"
 	"github.com/alex-305/bookbackend/models"
-	"github.com/alex-305/bookbackend/services/review"
+	"github.com/alex-305/bookbackend/services/reviewsvc"
 )
 
 func HandlePost(w http.ResponseWriter, r *http.Request, db *db.DB) {
@@ -32,7 +32,7 @@ func HandlePost(w http.ResponseWriter, r *http.Request, db *db.DB) {
 		return
 	}
 
-	reviewid, err := review.Post(tok, rev, db)
+	reviewid, err := reviewsvc.Post(tok, rev, db)
 
 	if err != nil {
 		log.Printf("%s", err)

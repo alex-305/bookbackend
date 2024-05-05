@@ -7,7 +7,7 @@ import (
 
 	"github.com/alex-305/bookbackend/db"
 	"github.com/alex-305/bookbackend/models"
-	"github.com/alex-305/bookbackend/services/users"
+	"github.com/alex-305/bookbackend/services/authsvc"
 )
 
 func HandleSignUp(w http.ResponseWriter, r *http.Request, db *db.DB) {
@@ -24,7 +24,7 @@ func HandleSignUp(w http.ResponseWriter, r *http.Request, db *db.DB) {
 		return
 	}
 
-	token, err := users.SignUp(creds, db)
+	token, err := authsvc.SignUp(creds, db)
 
 	if err != nil {
 		log.Printf("%s", err)

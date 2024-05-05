@@ -2,13 +2,13 @@
 
 ## Endpoints
 ### POST /login
-**Params:**
+**Request Body (application/json):**
 
-    Username string
+    username string
 
-	Password string
+	password string
 
-	Email    string
+	email    string
 
     token    string
 
@@ -17,26 +17,41 @@
 	token string
 
 ### POST /signup
-**Params:**
+**Request Body (application/json):**
 
-    Username string
+    username string
 
-	Password string
+	password string
 
-	Email    string
+	email    string
 
 **Response:**
 
 	token string
 
+### GET /user/\[username\]
+**Request Body:**
+
+	N/A
+
+**Response:**
+
+	username    string
+
+	email       string
+
+	description string
+
+	join_date   time.Time
+
 ### POST /review
-**Params:**
+**Request Body (application/json):**
 
-	Content   string
+	content   string
 
-	Rating    uint8
+	rating    uint8
 
-	WorksID   string
+	worksID   string
 
     token     string
 
@@ -45,29 +60,27 @@
 	reviewid string
 
 ### GET /review\[reviewid\]
-**Params:**
+**Request Body:**
 
 	N/A
 
 **Response:**
 
-	Content string
+	content string
 
-	Username string
+	username string
 
-	Rating uint8
+	rating uint8
 
 
 ### DELETE /review\[reviewid\]
-**Params:**
+**Request Body (application/json):**
 
     token    string
 
 **Response:**
 
-	status
-
-### PUT /review
+	status 
 
 
 *not yet implemented*

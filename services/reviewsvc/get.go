@@ -1,4 +1,4 @@
-package review
+package reviewsvc
 
 import (
 	"github.com/alex-305/bookbackend/db"

@@ -1,4 +1,4 @@
-package users
+package authsvc
 
 import (
 	"github.com/alex-305/bookbackend/auth/helpers"

@@ -6,7 +6,7 @@ import (
 	"net/http"
 
 	"github.com/alex-305/bookbackend/db"
-	"github.com/alex-305/bookbackend/services/review"
+	"github.com/alex-305/bookbackend/services/reviewsvc"
 	"github.com/gorilla/mux"
 )
 
@@ -19,7 +19,7 @@ func HandleGet(w http.ResponseWriter, r *http.Request, d *db.DB) {
 	vars := mux.Vars(r)
 	reviewid := vars["reviewid"]
 
-	review, err := review.Get(reviewid, d)
+	review, err := reviewsvc.Get(reviewid, d)
 
 	if err != nil {
 		log.Printf("%s", err)
