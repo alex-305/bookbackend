@@ -1,0 +1,36 @@
+services:
+  book-backend:
+    build:
+      context: .
+    ports:
+      - "8080:8080"
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+      - DATABASE_HOST=${DB_HOST}
+      - DATABASE_PORT=${DB_PORT}
+    volumes:
+      - .:/src
+    depends_on:
+      - postgresdb
+    networks:
+      - api
+
+  postgresdb:
+    image: postgres:latest
+    container_name: postgres_container
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+      - DATABASE_HOST=${DB_HOST}
+      - DATABASE_PORT=${DB_PORT}
+    ports:
+      - "5432:5432"
+    networks:
+      - api
+
+networks:
+  api:
+    driver: bridge

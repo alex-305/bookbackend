@@ -2,7 +2,8 @@ package db
 
 import (
 	"database/sql"
-	"net/url"
+	"fmt"
+	"os"
 )
 
 type DB struct {
@@ -10,14 +11,10 @@ type DB struct {
 }
 
 func Start() (*DB, error) {
-	dsn := url.URL{
-		User:   url.UserPassword("postgres", "password"),
-		Host:   "localhost:5432",
-		Scheme: "postgres",
-		Path:   "book",
-	}
+	dsn := "user=%s password=%s host=%s dbname=%s sslmode=disable"
+	dsn = fmt.Sprintf(dsn, os.Getenv("POSTGRES_USER"), os.Getenv("POSTGRES_PASSWORD"), os.Getenv("DATABASE_HOST"), os.Getenv("POSTGRES_DB"))
 
-	db, err := sql.Open("postgres", dsn.String())
+	db, err := sql.Open("postgres", dsn)
 
 	if err != nil {
 		return nil, err
