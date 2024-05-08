@@ -1,5 +1,5 @@
 services:
-  book-backend:
+  backend:
     build:
       context: .
     ports:
@@ -12,12 +12,13 @@ services:
       - DATABASE_PORT=${DB_PORT}
     volumes:
       - .:/src
+    restart: on-failure
     depends_on:
-      - postgresdb
+      - db
     networks:
-      - api
+      - book-network
 
-  postgresdb:
+  db:
     image: postgres:latest
     container_name: postgres_container
     environment:
@@ -29,8 +30,11 @@ services:
     ports:
       - "5432:5432"
     networks:
-      - api
+      - book-network
+    volumes:
+      - ./sql:/docker-entrypoint-initdb.d
 
 networks:
-  api:
+  book-network:
+    name: book-network
     driver: bridge
