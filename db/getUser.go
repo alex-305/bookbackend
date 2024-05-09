@@ -17,7 +17,7 @@ func (db *DB) GetUser(username string) (models.User, error) {
 }
 
 func (db *DB) GetCredentials(username string) (models.Credentials, error) {
-	row := db.QueryRow("SELECT username, email, password FROM users WHERE username $1", username)
+	row := db.QueryRow("SELECT username, email, password FROM users WHERE username = $1", username)
 	var creds models.Credentials
 
 	err := row.Scan(&creds.Username, &creds.Email, &creds.Password)
