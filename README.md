@@ -51,7 +51,7 @@
 
 	rating    uint8
 
-	worksID   string
+	worksid   string
 
     token     string
 
