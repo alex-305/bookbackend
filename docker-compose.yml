@@ -19,7 +19,7 @@ services:
       - book-network
 
   db:
-    image: postgres:latest
+    image: postgres:alpine
     container_name: postgres_container
     environment:
       - POSTGRES_USER=${DB_USER}
