@@ -5,23 +5,12 @@ import (
 )
 
 func (db *DB) PostReview(username string, rev models.Review) (string, error) {
-	tx, err := db.Begin()
-
-	if err != nil {
-		return "", err
-	}
-
 	query := `INSERT INTO reviews(username, worksID, content, rating) VALUES($1, $2, $3, $4) RETURNING reviewID;`
 
 	var reviewid string
-	err = tx.QueryRow(query, username, rev.WorksID, rev.Content, rev.Rating).Scan(&reviewid)
+	err := db.QueryRow(query, username, rev.WorksID, rev.Content, rev.Rating).Scan(&reviewid)
 
 	if err != nil {
-		tx.Rollback()
-		return "", err
-	}
-
-	if err := tx.Commit(); err != nil {
 		return "", err
 	}
 

@@ -20,6 +20,7 @@ func Post(tok string, rev models.Review, d *db.DB) (string, error) {
 	reviewid, err := d.PostReview(username, rev)
 
 	if err != nil {
+		log.Printf("%s", err)
 		return "", err
 	}
 	return reviewid, nil
