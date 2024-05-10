@@ -51,15 +51,15 @@ func getOptions(r *http.Request) models.SortOptions {
 		Page:      0,
 	}
 
-	limit, err := strconv.ParseUint(q.Get("sort_order"), 10, 32)
+	limit, err := strconv.ParseUint(q.Get("amount"), 10, 32)
 
-	if err == nil {
+	if err != nil {
 		o.Limit = uint(limit)
 	}
 
 	page, err := strconv.ParseUint(q.Get("page"), 10, 32)
 
-	if err == nil {
+	if err != nil {
 		o.Page = uint(page)
 	}
 

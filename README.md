@@ -113,6 +113,16 @@
 **Request Body**
 	
 	N/A
+**Params**
+
+	?sort_order=  **OPTIONS: post_date | rating**
+
+	?sort_dir= **OPTIONS: ascending | descending**
+
+	?page= integer>=0
+
+	?amount= integer>=0
+
 
 **Response**
 
