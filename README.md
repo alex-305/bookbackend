@@ -2,6 +2,10 @@
 
 ## Endpoints
 ### POST /login
+**Headers**
+
+	Authorization: Bearer token
+
 **Request Body (application/json):**
 
     username string
@@ -10,13 +14,15 @@
 
 	email    string
 
-    token    string
-
 **Response:**
 
 	token string
 
 ### POST /signup
+**Headers**
+
+	N/A
+
 **Request Body (application/json):**
 
     username string
@@ -30,6 +36,10 @@
 	token string
 
 ### GET /user/\[username\]
+**Headers**
+
+	N/A
+
 **Request Body:**
 
 	N/A
@@ -45,6 +55,10 @@
 	join_date   time.Time
 
 ### POST /review
+**Headers**
+
+	Authorization: Bearer token
+
 **Request Body (application/json):**
 
 	content   string
@@ -60,6 +74,10 @@
 	reviewid string
 
 ### GET /review\[reviewid\]
+**Headers**
+
+	N/A
+
 **Request Body:**
 
 	N/A
@@ -74,13 +92,33 @@
 
 
 ### DELETE /review\[reviewid\]
-**Request Body (application/json):**
+**Headers**
 
-    token    string
+	Authorization: Bearer token
+
+**Request Body**
+
+	N/A
 
 **Response:**
 
 	status 
 
 
-*not yet implemented*
+### GET /user/\[username\]/reviews
+**Headers**
+
+	N/A
+
+**Request Body**
+	
+	N/A
+
+**Response**
+
+	username  string,
+    worksID   string,
+    reviewID  string,
+    content   string,
+    rating 	  uint8,
+    post_date date,
