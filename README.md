@@ -116,9 +116,14 @@
 
 **Response**
 
-	username  string,
-    worksID   string,
-    reviewID  string,
-    content   string,
-    rating 	  uint8,
-    post_date date,
+	username  string
+
+    worksID   string
+
+    reviewID  string
+
+    content   string
+
+    rating 	  uint8
+
+    post_date date
