@@ -10,7 +10,7 @@ RETURNS VARCHAR(255) AS $$
 
 DECLARE 
 
-    base_62 VARCHAR(62) := "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    base_62 VARCHAR(62) := '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
     result VARCHAR(20) := '';
     remainder INTEGER;
 
