@@ -29,10 +29,21 @@ func (db DB) GetReviewList(rows *sql.Rows) ([]models.Review, error) {
 	for rows.Next() {
 		var review models.Review
 
-		err := rows.Scan(&review.Username, &review.WorksID, &review.ReviewID, &review.Content, &review.Rating, &review.Post_date)
+		var rating *uint8
+		var content sql.NullString
+
+		err := rows.Scan(&review.Username, &review.WorksID, &review.ReviewID, &content, &rating, &review.Post_date)
 
 		if err != nil {
 			return []models.Review{}, err
+		}
+
+		if rating != nil {
+			review.Rating = rating
+		}
+
+		if content.Valid {
+			review.Content = content.String
 		}
 
 		reviews = append(reviews, review)

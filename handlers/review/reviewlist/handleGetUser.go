@@ -25,7 +25,7 @@ func HandleGetUser(w http.ResponseWriter, r *http.Request, db *db.DB) {
 	reviews, err := reviewlistsvc.GetUser(username, options, db)
 
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		http.Error(w, "Could not get user list", http.StatusBadRequest)
 		return
 	}
 

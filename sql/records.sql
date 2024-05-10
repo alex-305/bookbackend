@@ -1,0 +1,23 @@
+INSERT INTO users(username, password, email) VALUES('ted', '$2a$10$NxMO/aiddukYPXCM7/riCeKETTOUYEcGyBfMDxBpwxVZIU/eOPE12', 'ted@mail.com');
+INSERT INTO users(username, password, email) VALUES('john', '$2a$10$NxMO/aiddukYPXCM7/riCeKETTOUYEcGyBfMDxBpwxVZIU/eOPE12', 'john@mail.com');
+INSERT INTO users(username, password, email) VALUES('fred', '$2a$10$NxMO/aiddukYPXCM7/riCeKETTOUYEcGyBfMDxBpwxVZIU/eOPE12', 'fred@mail.com');
+INSERT INTO users(username, password, email) VALUES('sam', '$2a$10$NxMO/aiddukYPXCM7/riCeKETTOUYEcGyBfMDxBpwxVZIU/eOPE12', 'sam@mail.com');
+INSERT INTO users(username, password, email) VALUES('alex', '$2a$10$NxMO/aiddukYPXCM7/riCeKETTOUYEcGyBfMDxBpwxVZIU/eOPE12', 'alex@mail.com');
+INSERT INTO users(username, password, email) VALUES('nick', '$2a$10$NxMO/aiddukYPXCM7/riCeKETTOUYEcGyBfMDxBpwxVZIU/eOPE12', 'nick@mail.com');
+INSERT INTO users(username, password, email) VALUES('gerald', '$2a$10$NxMO/aiddukYPXCM7/riCeKETTOUYEcGyBfMDxBpwxVZIU/eOPE12', 'gerald@mail.com');
+INSERT INTO users(username, password, email) VALUES('amy', '$2a$10$NxMO/aiddukYPXCM7/riCeKETTOUYEcGyBfMDxBpwxVZIU/eOPE12', 'amy@mail.com');
+INSERT INTO users(username, password, email) VALUES('ned', '$2a$10$NxMO/aiddukYPXCM7/riCeKETTOUYEcGyBfMDxBpwxVZIU/eOPE12', 'ned@mail.com');
+INSERT INTO users(username, password, email) VALUES('allen', '$2a$10$NxMO/aiddukYPXCM7/riCeKETTOUYEcGyBfMDxBpwxVZIU/eOPE12', 'allen@mail.com');
+INSERT INTO users(username, password, email) VALUES('adam', '$2a$10$NxMO/aiddukYPXCM7/riCeKETTOUYEcGyBfMDxBpwxVZIU/eOPE12', 'adam@mail.com');
+INSERT INTO users(username, password, email) VALUES('jacob', '$2a$10$NxMO/aiddukYPXCM7/riCeKETTOUYEcGyBfMDxBpwxVZIU/eOPE12', 'jacob@mail.com');
+INSERT INTO users(username, password, email) VALUES('james', '$2a$10$NxMO/aiddukYPXCM7/riCeKETTOUYEcGyBfMDxBpwxVZIU/eOPE12', 'james@mail.com');
+INSERT INTO users(username, password, email) VALUES('miles', '$2a$10$NxMO/aiddukYPXCM7/riCeKETTOUYEcGyBfMDxBpwxVZIU/eOPE12', 'miles@mail.com');
+INSERT INTO users(username, password, email) VALUES('peter', '$2a$10$NxMO/aiddukYPXCM7/riCeKETTOUYEcGyBfMDxBpwxVZIU/eOPE12', 'peter@mail.com');
+INSERT INTO users(username, password, email) VALUES('jane', '$2a$10$NxMO/aiddukYPXCM7/riCeKETTOUYEcGyBfMDxBpwxVZIU/eOPE12', 'jane@mail.com');
+
+INSERT INTO reviews(username, worksID, content, rating) VALUES('ted', 'OL82548W', 'it was pretty good', 6) RETURNING reviewID;
+INSERT INTO reviews(username, worksID, content, rating) VALUES('ted', 'OL1230715W', 'i didnt like it at all', 3) RETURNING reviewID;
+INSERT INTO reviews(username, worksID, content, rating) VALUES('ted', 'OL103123W', 'best book ive ever read', 10) RETURNING reviewID;
+INSERT INTO reviews(username, worksID, content, rating) VALUES('ted', 'OL14871228W', '', 5) RETURNING reviewID;
+INSERT INTO reviews(username, worksID, content) VALUES('ted', 'OL15110516W', 'idk i cant tell if i love it or hate it') RETURNING reviewID;
+INSERT INTO reviews(username, worksID, content, rating) VALUES('ted', 'OL1067314W', 'not sure why this young fella was so upset but I wasnt a fan', 3) RETURNING reviewID;
