@@ -1,4 +1,4 @@
-package review
+package reviewlist
 
 import (
 	"encoding/json"

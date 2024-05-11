@@ -22,6 +22,14 @@ func (db DB) GetUserReviewList(username string, o models.SortOptions) ([]models.
 	return db.GetReviewList(rows)
 }
 
+func (db DB) GetUserReviewCount(username string) int {
+	query := `SELECT COUNT(*) FROM reviews WHERE username = $1`
+	var count int
+	_ = db.QueryRow(query, username).Scan(&count)
+
+	return count
+}
+
 func (db DB) GetReviewList(rows *sql.Rows) ([]models.Review, error) {
 
 	defer rows.Close()

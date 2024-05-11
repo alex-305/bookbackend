@@ -6,7 +6,7 @@ import (
 	"github.com/alex-305/bookbackend/db"
 	"github.com/alex-305/bookbackend/handlers/auth"
 	"github.com/alex-305/bookbackend/handlers/review"
-	reviewlist "github.com/alex-305/bookbackend/handlers/review/reviewlist"
+	"github.com/alex-305/bookbackend/handlers/review/reviewlist"
 	"github.com/alex-305/bookbackend/handlers/swagger"
 	"github.com/alex-305/bookbackend/handlers/user"
 	"github.com/gorilla/mux"
@@ -26,8 +26,9 @@ func (s *APIServer) defineRoutes(router *mux.Router) {
 	router.HandleFunc("/review", makeHttp(review.HandlePost, s.DB)).Methods(http.MethodPost)
 	router.HandleFunc("/review/{reviewid}", makeHttp(review.HandleDelete, s.DB)).Methods(http.MethodDelete)
 	router.HandleFunc("/review/{reviewid}", makeHttp(review.HandleGet, s.DB)).Methods(http.MethodGet)
-	//Review List Routes
+	//User Review List
 	router.HandleFunc("/user/{username}/reviews", makeHttp(reviewlist.HandleGetUser, s.DB)).Methods(http.MethodGet)
+	router.HandleFunc("/user/{username}/reviews/count", makeHttp(reviewlist.HandleGetUserCount, s.DB)).Methods(http.MethodGet)
 	//router.HandleFunc("/reviews/popular", makeHttp(reviewList.HandleGetPopular, s.DB)).Methods(http.MethodGet)
 	//Reply Routes
 	// router.HandleFunc("/review/{reviewid}/reply", makeHttp(reply.HandlePost, s.DB)).Methods(http.MethodPost)
