@@ -1,0 +1,208 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Book API",
+    "version": "1.0.0"
+  },
+  "security": [ {
+    "bearerAuth": []
+  } ],
+  "components": {
+    "securitySchemas": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "paths": {
+    "/login": {
+      "post": {
+        "summary": "Login a user",
+        "security": [ {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": "true",
+          "content": {
+            "application/json":{
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string",
+                    "example": "ted"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "password123"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "ted@mail.com"
+                  }
+                }
+              }
+            }
+        }
+
+        },
+        "responses": {
+          "200": {
+            "description": "Successful user login",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Username not found"
+            }
+          },
+          "404": {
+            "description": "Incorrect password"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "/signup": {
+        "post": {
+          "summary": "Signup a user",
+          "security": [ {
+              "bearerAuth": []
+            }
+          ],
+          "requestBody": {
+            "required": "true",
+            "content": {
+              "application/json":{
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "username": {
+                      "type":"string",
+                      "example": "ted"
+                    },
+                    "password": {
+                      "type":"string",
+                      "example": "password123"
+                    },
+                    "email": {
+                      "type":"string",
+                      "example": "ted@mail.com"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Successful user login",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "token": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Could not sign user up"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+      },
+      "/user/{username}": {
+        "get": {
+          "summary": "Get info of a user",
+          "responses": {
+            "200": {
+              "description": "user exists",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "username": {
+                        "type": "string",
+                        "example": "ted"
+                      },
+                      "email": {
+                        "type": "string",
+                        "example": "ted@mail.com"
+                      },
+                      "description": {
+                        "type": "string",
+                        "example": "My name is ted I like books!"
+                      },
+                      "join_date": {
+                        "type": "date",
+                        "example": "12/31/69"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "user does not exist"
+            }
+          }
+        }
+      },
+      "/review": {
+        "post": {
+          "requestBody": {
+            "required": "true",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "content": {
+                      "type": "string",
+                      "example": "I liked the book!"
+                    },
+                    "rating": {
+                      "type": "number",
+                      "example": 8
+                    },
+                    "worksid": {
+                      "type": "number",
+                      "example": "OL82548W"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+
+            }
+          }
+        }
+      }
+    }
+  }

@@ -7,11 +7,15 @@ import (
 	"github.com/alex-305/bookbackend/handlers/auth"
 	"github.com/alex-305/bookbackend/handlers/review"
 	reviewlist "github.com/alex-305/bookbackend/handlers/review/reviewlist"
+	"github.com/alex-305/bookbackend/handlers/swagger"
 	"github.com/alex-305/bookbackend/handlers/user"
 	"github.com/gorilla/mux"
 )
 
 func (s *APIServer) defineRoutes(router *mux.Router) {
+	//Swagger
+	router.PathPrefix("/swagger/").Handler(http.StripPrefix("/swagger/", http.FileServer(http.Dir("./swagger/node_modules/swagger-ui-dist/"))))
+	router.HandleFunc("/swagger-ui/", swagger.Handle)
 	//Auth Routes
 	router.HandleFunc("/login", makeHttp(auth.HandleLogin, s.DB)).Methods(http.MethodPost)
 	router.HandleFunc("/signup", makeHttp(auth.HandleSignUp, s.DB)).Methods(http.MethodPost)
