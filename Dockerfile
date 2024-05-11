@@ -11,6 +11,10 @@ COPY .env ./
 
 RUN go mod download
 
-RUN CGO_ENABLED=0 GOOS=linux go build -o /bookbackend
+RUN go get github.com/githubnemo/CompileDaemon
+RUN go install github.com/githubnemo/CompileDaemon
+ENTRYPOINT CompileDaemon -build="go build -o /bookbackend" -command="/bookbackend"
 
-CMD ["/bookbackend"]
+# RUN CGO_ENABLED=0 GOOS=linux go build -o /bookbackend
+
+# CMD ["/bookbackend"]
