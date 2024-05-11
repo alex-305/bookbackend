@@ -2,6 +2,7 @@ package review
 
 import (
 	"encoding/json"
+
 	"net/http"
 	"strconv"
 
@@ -41,7 +42,6 @@ func HandleGetUser(w http.ResponseWriter, r *http.Request, db *db.DB) {
 }
 
 func getOptions(r *http.Request) models.SortOptions {
-
 	q := r.URL.Query()
 
 	o := models.SortOptions{
@@ -50,16 +50,16 @@ func getOptions(r *http.Request) models.SortOptions {
 		Limit:     50,
 		Page:      0,
 	}
-
-	limit, err := strconv.ParseUint(q.Get("amount"), 10, 32)
-
-	if err != nil {
+	limitStr := q.Get("amount")
+	limit, err := strconv.ParseUint(limitStr, 10, 32)
+	if err == nil {
 		o.Limit = uint(limit)
 	}
+	//limit, err = strconv.ParseUint(limit, 10, 32)
+	pageStr := q.Get("page")
+	page, err := strconv.ParseUint(pageStr, 10, 32)
 
-	page, err := strconv.ParseUint(q.Get("page"), 10, 32)
-
-	if err != nil {
+	if err == nil {
 		o.Page = uint(page)
 	}
 

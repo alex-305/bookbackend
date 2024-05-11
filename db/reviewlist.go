@@ -9,9 +9,11 @@ import (
 )
 
 func (db DB) GetUserReviewList(username string, o models.SortOptions) ([]models.Review, error) {
-	query := fmt.Sprintf(`SELECT * FROM reviews WHERE username = $1 ORDER BY %s %s LIMIT $2 OFFSET $3;`, o.By, o.Direction)
+	query := fmt.Sprintf(`SELECT * FROM reviews WHERE username = $1 ORDER BY %s %s LIMIT %d OFFSET %d;`, o.By, o.Direction, o.Limit, o.Page*o.Limit)
 
-	rows, err := db.Query(query, username, o.Limit, o.Page*o.Limit)
+	log.Printf("%s", query)
+
+	rows, err := db.Query(query, username)
 
 	if err != nil {
 		log.Printf("%s", err)
