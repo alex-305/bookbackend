@@ -2,6 +2,10 @@
 
 FROM golang:1.22.2
 
+ENV PROJECT_DIR=/src \
+    GO111MODULE=on \
+    CGO_ENABLED=0
+
 WORKDIR /src
 
 COPY go.mod go.sum ./
