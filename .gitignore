@@ -6,3 +6,4 @@
 #Excluded from the ignore
 !.gitignore
 !*/
+!.dockerignore
