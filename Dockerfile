@@ -17,7 +17,7 @@ RUN go mod download
 
 RUN go get github.com/githubnemo/CompileDaemon
 RUN go install github.com/githubnemo/CompileDaemon
-ENTRYPOINT CompileDaemon -build="go build -o /bookbackend" -command="/bookbackend"
+ENTRYPOINT CompileDaemon -build="go build -buildvcs=false -o /bookbackend" -command="/bookbackend"
 
 # RUN CGO_ENABLED=0 GOOS=linux go build -o /bookbackend
 
