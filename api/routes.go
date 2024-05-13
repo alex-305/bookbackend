@@ -25,6 +25,7 @@ func (s *APIServer) defineRoutes(router *mux.Router) {
 	router.HandleFunc("/user/{username}/password", makeHttp(user.HandlePatchPass, s.DB)).Methods(http.MethodPatch)
 	//Review Routes
 	router.HandleFunc("/review", makeHttp(review.HandlePost, s.DB)).Methods(http.MethodPost)
+	router.HandleFunc("/review/{reviewid}", makeHttp(review.HandlePut, s.DB)).Methods(http.MethodPut)
 	router.HandleFunc("/review/{reviewid}", makeHttp(review.HandleDelete, s.DB)).Methods(http.MethodDelete)
 	router.HandleFunc("/review/{reviewid}", makeHttp(review.HandleGet, s.DB)).Methods(http.MethodGet)
 	//User Review List
@@ -35,7 +36,7 @@ func (s *APIServer) defineRoutes(router *mux.Router) {
 	router.HandleFunc("/book/{worksid}/reviews", makeHttp(reviewlist.HandleGetBook, s.DB)).Methods(http.MethodGet)
 	router.HandleFunc("/book/{worksid}/reviews/count", makeHttp(reviewlist.HandleGetBookCount, s.DB)).Methods(http.MethodGet)
 	//Reply Routes
-	// router.HandleFunc("/review/{reviewid}/reply", makeHttp(reply.HandlePost, s.DB)).Methods(http.MethodPost)
+	//router.HandleFunc("/review/{reviewid}/reply", makeHttp(reply.HandlePost, s.DB)).Methods(http.MethodPost)
 	// router.HandleFunc("/review/{reviewid}/reply/")
 }
 

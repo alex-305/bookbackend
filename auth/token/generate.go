@@ -5,6 +5,7 @@ import (
 	"os"
 	"time"
 
+	"github.com/alex-305/bookbackend/models"
 	"github.com/golang-jwt/jwt"
 	"github.com/joho/godotenv"
 )
@@ -14,7 +15,7 @@ type Claims struct {
 	Username string
 }
 
-func Generate(username string) (string, error) {
+func Generate(username string) (models.Token, error) {
 	token := jwt.New(jwt.SigningMethodHS256)
 	claims, ok := token.Claims.(jwt.MapClaims)
 
@@ -31,10 +32,10 @@ func Generate(username string) (string, error) {
 		return "", errors.New("secret key could not be retrieved")
 	}
 
-	tokenString, err := token.SignedString([]byte(SecretKey))
+	tokStr, err := token.SignedString([]byte(SecretKey))
 
 	if err != nil {
 		return "", err
 	}
-	return tokenString, nil
+	return models.NewToken(tokStr), nil
 }

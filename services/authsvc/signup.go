@@ -7,7 +7,7 @@ import (
 	"github.com/alex-305/bookbackend/models"
 )
 
-func SignUp(creds models.Credentials, db *db.DB) (string, error) {
+func SignUp(creds models.Credentials, db *db.DB) (models.Token, error) {
 
 	hashedPassword, err := helpers.HashPassword(creds.Password)
 

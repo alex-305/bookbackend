@@ -1,6 +1,8 @@
 package db
 
 import (
+	"errors"
+
 	"github.com/alex-305/bookbackend/models"
 )
 
@@ -23,7 +25,7 @@ func (db *DB) GetCredentials(username string) (models.Credentials, error) {
 	err := row.Scan(&creds.Username, &creds.Email, &creds.Password)
 
 	if err != nil {
-		return models.Credentials{}, err
+		return models.Credentials{}, errors.New("unable to get credentials")
 	}
 
 	return creds, nil

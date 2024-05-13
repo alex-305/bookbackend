@@ -7,7 +7,7 @@ import (
 	"github.com/alex-305/bookbackend/models"
 )
 
-func Login(creds models.Credentials, tok string, db *db.DB) (string, error) {
+func Login(creds models.Credentials, tok models.Token, db *db.DB) (models.Token, error) {
 	dbcreds, err := db.GetCredentials(creds.Username)
 
 	if err != nil {

@@ -6,9 +6,10 @@ import (
 	"github.com/alex-305/bookbackend/auth/access"
 	"github.com/alex-305/bookbackend/auth/token"
 	"github.com/alex-305/bookbackend/db"
+	"github.com/alex-305/bookbackend/models"
 )
 
-func PatchDescription(username, description, tok string, db *db.DB) error {
+func PatchDescription(username, description string, tok models.Token, db *db.DB) error {
 
 	userUsername, err := token.Validate(tok)
 

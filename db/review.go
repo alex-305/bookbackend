@@ -40,3 +40,13 @@ func (db *DB) GetReview(reviewid string) (models.Review, error) {
 
 	return rev, nil
 }
+
+func (db *DB) UpdateReview(reviewid string, r models.Review) error {
+	query := `UPDATE reviews SET content = $1, rating = $2 WHERE reviewid = $3`
+	_, err := db.Exec(query, r.Content, r.Rating, reviewid)
+
+	if err != nil {
+		return err
+	}
+	return nil
+}

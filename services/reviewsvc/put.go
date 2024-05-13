@@ -1,33 +1,34 @@
-package usersvc
+package reviewsvc
 
 import (
+	"errors"
+
 	"github.com/alex-305/bookbackend/auth/access"
-	"github.com/alex-305/bookbackend/auth/helpers"
 	"github.com/alex-305/bookbackend/auth/token"
 	"github.com/alex-305/bookbackend/db"
 	"github.com/alex-305/bookbackend/models"
 )
 
-func PatchPassword(userToUpdate, password string, tok models.Token, db *db.DB) error {
+func Put(reviewid string, rev models.Review, tok models.Token, d *db.DB) error {
 	username, err := token.Validate(tok)
 
 	if err != nil {
 		return err
 	}
 
-	err = access.HasOwnershipAccess(username, userToUpdate)
+	reviewToUpdate, err := d.GetReview(reviewid)
 
 	if err != nil {
 		return err
 	}
 
-	hashedPassword, err := helpers.HashPassword(password)
+	err = access.HasOwnershipAccess(username, reviewToUpdate.Username)
 
 	if err != nil {
-		return err
+		return errors.New("unauthorized")
 	}
 
-	err = db.UpdateUserPassword(username, hashedPassword)
+	err = d.UpdateReview(reviewid, rev)
 
 	if err != nil {
 		return err

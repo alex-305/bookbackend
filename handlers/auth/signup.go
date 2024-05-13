@@ -31,7 +31,7 @@ func HandleSignUp(w http.ResponseWriter, r *http.Request, db *db.DB) {
 		http.Error(w, "Could not create account", http.StatusBadRequest)
 		return
 	}
-	tokenJSON := map[string]string{"token": token}
+	tokenJSON := map[string]string{"token": models.String(token)}
 	response, err := json.Marshal(tokenJSON)
 
 	if err != nil {

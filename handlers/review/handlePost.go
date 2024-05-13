@@ -32,7 +32,7 @@ func HandlePost(w http.ResponseWriter, r *http.Request, db *db.DB) {
 		return
 	}
 
-	reviewid, err := reviewsvc.Post(tok, rev, db)
+	reviewid, err := reviewsvc.Post(rev, tok, db)
 
 	if err != nil {
 		log.Printf("%s", err)

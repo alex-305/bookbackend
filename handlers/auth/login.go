@@ -27,20 +27,16 @@ func HandleLogin(w http.ResponseWriter, r *http.Request, db *db.DB) {
 
 	token, _ := helpers.GetToken(r)
 
-	_, err = db.GetCredentials(creds.Username)
-
-	if err != nil {
-		http.Error(w, "User does not exist", http.StatusNotFound)
-		return
-	}
-
 	token, err = authsvc.Login(creds, token, db)
 
-	if err != nil {
+	if err.Error() == "unable to get credentials" {
+		http.Error(w, "User does not exist", http.StatusNotFound)
+		return
+	} else if err != nil {
 		http.Error(w, "Incorrect password", http.StatusUnauthorized)
 		return
 	}
-	tokenJSON := map[string]string{"token": token}
+	tokenJSON := map[string]string{"token": models.String(token)}
 	response, err := json.Marshal(tokenJSON)
 
 	if err != nil {

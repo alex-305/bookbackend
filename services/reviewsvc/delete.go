@@ -4,9 +4,10 @@ import (
 	"github.com/alex-305/bookbackend/auth/access"
 	"github.com/alex-305/bookbackend/auth/token"
 	"github.com/alex-305/bookbackend/db"
+	"github.com/alex-305/bookbackend/models"
 )
 
-func Delete(tok, reviewid string, db *db.DB) error {
+func Delete(reviewid string, tok models.Token, db *db.DB) error {
 	username, err := token.Validate(tok)
 
 	if err != nil {

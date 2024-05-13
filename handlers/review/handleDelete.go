@@ -26,7 +26,7 @@ func HandleDelete(w http.ResponseWriter, r *http.Request, db *db.DB) {
 
 	reviewid := vars["reviewid"]
 
-	err = reviewsvc.Delete(tok, reviewid, db)
+	err = reviewsvc.Delete(reviewid, tok, db)
 	if err != nil {
 		http.Error(w, "Could not delete review", http.StatusBadRequest)
 		return
