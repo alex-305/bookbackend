@@ -2,7 +2,6 @@ package reviewlist
 
 import (
 	"encoding/json"
-
 	"net/http"
 
 	"github.com/alex-305/bookbackend/db"
@@ -10,21 +9,16 @@ import (
 	"github.com/gorilla/mux"
 )
 
-func HandleGetUser(w http.ResponseWriter, r *http.Request, db *db.DB) {
-	if r.Method != http.MethodGet {
-		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
-		return
-	}
-
+func HandleGetBook(w http.ResponseWriter, r *http.Request, d *db.DB) {
 	vars := mux.Vars(r)
-	username := vars["username"]
+	worksid := vars["worksid"]
 
 	options := getOptions(r)
 
-	reviews, err := reviewlistsvc.GetUser(username, options, db)
+	reviews, err := reviewlistsvc.GetBook(worksid, options, d)
 
 	if err != nil {
-		http.Error(w, "Could not get user list", http.StatusBadRequest)
+		http.Error(w, "Could not get review list", http.StatusBadRequest)
 		return
 	}
 

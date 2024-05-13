@@ -30,7 +30,10 @@ func (s *APIServer) defineRoutes(router *mux.Router) {
 	//User Review List
 	router.HandleFunc("/user/{username}/reviews", makeHttp(reviewlist.HandleGetUser, s.DB)).Methods(http.MethodGet)
 	router.HandleFunc("/user/{username}/reviews/count", makeHttp(reviewlist.HandleGetUserCount, s.DB)).Methods(http.MethodGet)
+	//Book Review List
 	//router.HandleFunc("/reviews/popular", makeHttp(reviewList.HandleGetPopular, s.DB)).Methods(http.MethodGet)
+	router.HandleFunc("/book/{worksid}/reviews", makeHttp(reviewlist.HandleGetBook, s.DB)).Methods(http.MethodGet)
+	router.HandleFunc("/book/{worksid}/reviews/count", makeHttp(reviewlist.HandleGetBookCount, s.DB)).Methods(http.MethodGet)
 	//Reply Routes
 	// router.HandleFunc("/review/{reviewid}/reply", makeHttp(reply.HandlePost, s.DB)).Methods(http.MethodPost)
 	// router.HandleFunc("/review/{reviewid}/reply/")
