@@ -37,7 +37,7 @@ func HandlePatchDesc(w http.ResponseWriter, r *http.Request, db *db.DB) {
 		return
 	}
 
-	err = usersvc.PatchDescription(tok, username, d.Description, db)
+	err = usersvc.PatchDescription(username, d.Description, tok, db)
 
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)

@@ -14,7 +14,7 @@ import (
 
 func (s *APIServer) defineRoutes(router *mux.Router) {
 	//Swagger
-	router.PathPrefix("/swagger/").Handler(http.StripPrefix("/swagger/", http.FileServer(http.Dir("./swagger/node_modules/swagger-ui-dist/"))))
+	router.PathPrefix("/swagger/").Handler(http.StripPrefix("/swagger/", http.FileServer(http.Dir("./docs/swagger/node_modules/swagger-ui-dist/"))))
 	router.HandleFunc("/swagger-ui/", swagger.Handle)
 	//Auth Routes
 	router.HandleFunc("/login", makeHttp(auth.HandleLogin, s.DB)).Methods(http.MethodPost)
@@ -22,6 +22,7 @@ func (s *APIServer) defineRoutes(router *mux.Router) {
 	//User Routes
 	router.HandleFunc("/user/{username}", makeHttp(user.HandleGetUser, s.DB)).Methods(http.MethodGet)
 	router.HandleFunc("/user/{username}/description", makeHttp(user.HandlePatchDesc, s.DB)).Methods(http.MethodPatch)
+	router.HandleFunc("/user/{username}/password", makeHttp(user.HandlePatchPass, s.DB)).Methods(http.MethodPatch)
 	//Review Routes
 	router.HandleFunc("/review", makeHttp(review.HandlePost, s.DB)).Methods(http.MethodPost)
 	router.HandleFunc("/review/{reviewid}", makeHttp(review.HandleDelete, s.DB)).Methods(http.MethodDelete)

@@ -1,12 +1,14 @@
 package usersvc
 
 import (
+	"log"
+
 	"github.com/alex-305/bookbackend/auth/access"
 	"github.com/alex-305/bookbackend/auth/token"
 	"github.com/alex-305/bookbackend/db"
 )
 
-func PatchDescription(tok, username, description string, db *db.DB) error {
+func PatchDescription(username, description, tok string, db *db.DB) error {
 
 	userUsername, err := token.Validate(tok)
 
@@ -21,6 +23,11 @@ func PatchDescription(tok, username, description string, db *db.DB) error {
 	}
 
 	err = db.UpdateUserDescription(username, description)
+
+	if err != nil {
+		log.Printf("%s", err)
+		return err
+	}
 
 	return nil
 }
