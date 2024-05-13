@@ -1,6 +1,8 @@
 package authsvc
 
 import (
+	"errors"
+
 	"github.com/alex-305/bookbackend/auth/helpers"
 	"github.com/alex-305/bookbackend/auth/token"
 	"github.com/alex-305/bookbackend/db"
@@ -18,7 +20,13 @@ func SignUp(creds models.Credentials, db *db.DB) (models.Token, error) {
 	ok := helpers.ValidateUsername(creds.Username)
 
 	if !ok {
-		return "", err
+		return "", errors.New("invalid username")
+	}
+
+	ok = helpers.ValidateEmail(creds.Email)
+
+	if !ok {
+		return "", errors.New("invalid email")
 	}
 
 	creds.Password = hashedPassword
