@@ -29,7 +29,7 @@ func HandleLogin(w http.ResponseWriter, r *http.Request, db *db.DB) {
 
 	token, err = authsvc.Login(creds, token, db)
 
-	if err.Error() == "unable to get credentials" {
+	if err != nil && err.Error() == "unable to get credentials" {
 		http.Error(w, "User does not exist", http.StatusNotFound)
 		return
 	} else if err != nil {
