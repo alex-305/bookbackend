@@ -1,9 +1,5 @@
-CREATE SEQUENCE base62id
-    INCREMENT BY 1
-    START WITH 1
-    MINVALUE 1
-    NO MAXVALUE
-    CACHE 1;
+CREATE SEQUENCE revID;
+CREATE SEQUENCE comID;
 
 CREATE OR REPLACE FUNCTION genAlphaNum(num BIGINT)
 RETURNS VARCHAR(255) AS $$
@@ -42,7 +38,7 @@ CREATE TABLE users (
 CREATE TABLE reviews (
     username VARCHAR(30) NOT NULL,
     worksID VARCHAR(30) NOT NULL,
-    reviewID VARCHAR(20) DEFAULT genAlphaNum(NEXTVAL('base62id')),
+    reviewID VARCHAR(20) DEFAULT genAlphaNum(NEXTVAL('revID')),
     content VARCHAR(500),
     rating SMALLINT,
     post_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -56,9 +52,9 @@ CREATE TABLE reviews (
     PRIMARY KEY(reviewID)
 );
 
-CREATE TABLE replies (
+CREATE TABLE comments (
     reviewID VARCHAR(20) NOT NULL,
-    replyID VARCHAR(20) DEFAULT genAlphaNum(NEXTVAL('base62id')),
+    commentID VARCHAR(20) DEFAULT genAlphaNum(NEXTVAL('comID')),
     content VARCHAR(500) NOT NULL,
     username VARCHAR(30) NOT NULL,
 
@@ -66,7 +62,7 @@ CREATE TABLE replies (
     CONSTRAINT fk_reviewid FOREIGN KEY(reviewID) REFERENCES reviews(reviewID) ON DELETE CASCADE,
     CONSTRAINT fk_username FOREIGN KEY(username) REFERENCES users(username) ON DELETE CASCADE,
 
-    PRIMARY KEY(replyID)
+    PRIMARY KEY(commentID)
 );
 
 CREATE TABLE user_likes_reviews (
@@ -80,15 +76,15 @@ CREATE TABLE user_likes_reviews (
     PRIMARY KEY(username, reviewID)
 );
 
-CREATE TABLE user_likes_reply (
+CREATE TABLE user_likes_comment (
     username VARCHAR(30) NOT NULL,
-    replyID VARCHAR(20) NOT NULL,
+    commentID VARCHAR(20) NOT NULL,
 
     --Constraints
-    CONSTRAINT fk_reviewid FOREIGN KEY(replyID) REFERENCES replies(replyID) ON DELETE CASCADE,
+    CONSTRAINT fk_commentID FOREIGN KEY(commentID) REFERENCES comments(commentID) ON DELETE CASCADE,
     CONSTRAINT fk_username FOREIGN KEY(username) REFERENCES users(username) ON DELETE CASCADE,
 
-    PRIMARY KEY(username, replyID)
+    PRIMARY KEY(username, commentID)
 );
 
 CREATE TABLE user_follows_user (
