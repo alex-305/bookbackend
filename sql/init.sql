@@ -34,7 +34,7 @@ CREATE TABLE users (
     username VARCHAR(30) NOT NULL CHECK (username = LOWER(username)),
     password CHAR(60) NOT NULL,
     email VARCHAR(100) NOT NULL,
-    description TEXT NOT NULL DEFAULT '',
+    description VARCHAR(500) NOT NULL DEFAULT '',
     join_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(username)
 );
@@ -43,7 +43,7 @@ CREATE TABLE reviews (
     username VARCHAR(30) NOT NULL,
     worksID VARCHAR(30) NOT NULL,
     reviewID VARCHAR(20) DEFAULT genAlphaNum(NEXTVAL('base62id')),
-    content TEXT,
+    content VARCHAR(500),
     rating SMALLINT,
     post_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
@@ -59,6 +59,7 @@ CREATE TABLE reviews (
 CREATE TABLE replies (
     reviewID VARCHAR(20) NOT NULL,
     replyID VARCHAR(20) DEFAULT genAlphaNum(NEXTVAL('base62id')),
+    content VARCHAR(500) NOT NULL,
     username VARCHAR(30) NOT NULL,
 
     --Constraints
