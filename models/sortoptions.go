@@ -30,7 +30,7 @@ const (
 type CommentSortBy string
 
 const (
-	ComLikes    CommentSortBy = "likes"
+	ComLikes    CommentSortBy = "likecount"
 	ComPostDate CommentSortBy = "post_date"
 )
 
