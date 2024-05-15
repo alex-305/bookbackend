@@ -65,7 +65,7 @@
 
 	rating    uint8
 
-	worksid   string
+	volumeid   string
 
     token     string
 
@@ -128,7 +128,7 @@
 
 	username  string
 
-    worksID   string
+    volumeid   string
 
     reviewID  string
 

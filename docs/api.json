@@ -188,7 +188,7 @@
                       "type": "number",
                       "example": 8
                     },
-                    "worksid": {
+                    "volumeid": {
                       "type": "number",
                       "example": "OL82548W"
                     }

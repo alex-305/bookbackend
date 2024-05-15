@@ -10,9 +10,9 @@ import (
 
 func HandleGetBookCount(w http.ResponseWriter, r *http.Request, db *db.DB) {
 	vars := mux.Vars(r)
-	worksid := vars["worksid"]
+	volumeid := vars["volumeid"]
 
-	count := db.GetBookReviewCount(worksid)
+	count := db.GetBookReviewCount(volumeid)
 
 	countJSON := map[string]int{"count": count}
 	response, err := json.Marshal(countJSON)
