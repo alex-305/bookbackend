@@ -11,11 +11,11 @@ import (
 
 func HandleGetBook(w http.ResponseWriter, r *http.Request, d *db.DB) {
 	vars := mux.Vars(r)
-	worksid := vars["worksid"]
+	volumeid := vars["volumeid"]
 
 	options := getOptions(r)
 
-	reviews, err := reviewlistsvc.GetBook(worksid, options, d)
+	reviews, err := reviewlistsvc.GetBook(volumeid, options, d)
 
 	if err != nil {
 		http.Error(w, "Could not get review list", http.StatusBadRequest)

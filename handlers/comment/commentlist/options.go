@@ -1,4 +1,4 @@
-package reviewlist
+package commentlist
 
 import (
 	"net/http"
@@ -7,11 +7,11 @@ import (
 	"github.com/alex-305/bookbackend/models"
 )
 
-func getOptions(r *http.Request) models.ReviewSortOptions {
+func getOptions(r *http.Request) models.CommentSortOptions {
 	q := r.URL.Query()
 
-	o := models.ReviewSortOptions{
-		By:        models.RevPostDate,
+	o := models.CommentSortOptions{
+		By:        models.ComPostDate,
 		Direction: models.Descending,
 		Limit:     50,
 		Page:      0,
@@ -29,7 +29,7 @@ func getOptions(r *http.Request) models.ReviewSortOptions {
 		o.Page = uint(page)
 	}
 
-	o.By = models.ParseReviewSortBy(q.Get("sort_by"))
+	o.By = models.ParseCommentSortBy(q.Get("sort_by"))
 
 	o.Direction = models.ParseSortDirection(q.Get("sort_dir"))
 

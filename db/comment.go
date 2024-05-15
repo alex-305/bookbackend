@@ -7,7 +7,7 @@ import (
 )
 
 func (db *DB) PostComment(r models.Comment) (string, error) {
-	query := `INSERT into comments(username, reviewid, content) VALUES($1, $2, $3) RETURNING commentid`
+	query := `INSERT into comments(username, reviewID, content) VALUES($1, $2, $3) RETURNING commentid`
 	var commentid string
 	err := db.QueryRow(query, r.Username, r.ReviewID, r.Content).Scan(&commentid)
 

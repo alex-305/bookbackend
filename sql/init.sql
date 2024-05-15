@@ -37,7 +37,7 @@ CREATE TABLE users (
 
 CREATE TABLE reviews (
     username VARCHAR(30) NOT NULL,
-    worksID VARCHAR(30) NOT NULL,
+    volumeID VARCHAR(30) NOT NULL,
     reviewID VARCHAR(20) DEFAULT genAlphaNum(NEXTVAL('revID')),
     content VARCHAR(500),
     rating SMALLINT,
@@ -57,6 +57,8 @@ CREATE TABLE comments (
     commentID VARCHAR(20) DEFAULT genAlphaNum(NEXTVAL('comID')),
     content VARCHAR(500) NOT NULL,
     username VARCHAR(30) NOT NULL,
+    post_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    likecount BIGINT NOT NULL DEFAULT 0,
 
     --Constraints
     CONSTRAINT fk_reviewid FOREIGN KEY(reviewID) REFERENCES reviews(reviewID) ON DELETE CASCADE,

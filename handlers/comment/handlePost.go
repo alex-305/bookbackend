@@ -1,4 +1,4 @@
-package reply
+package comment
 
 import (
 	"encoding/json"

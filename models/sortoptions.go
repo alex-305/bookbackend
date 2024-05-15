@@ -1,17 +1,37 @@
 package models
 
-type SortOptions struct {
-	By        SortBy
+type SortOptions interface {
+	GetBy() string
+	GetDirection() string
+	GetLimit() uint
+	GetPage() uint
+}
+type ReviewSortOptions struct {
+	By        ReviewSortBy
 	Direction SortDirection
 	Limit     uint
 	Page      uint
 }
 
-type SortBy string
+type CommentSortOptions struct {
+	By        CommentSortBy
+	Direction SortDirection
+	Limit     uint
+	Page      uint
+}
+
+type ReviewSortBy string
 
 const (
-	PostDate SortBy = "post_date"
-	Rating   SortBy = "rating"
+	RevPostDate ReviewSortBy = "post_date"
+	RevRating   ReviewSortBy = "rating"
+)
+
+type CommentSortBy string
+
+const (
+	ComLikes    CommentSortBy = "likes"
+	ComPostDate CommentSortBy = "post_date"
 )
 
 type SortDirection string
@@ -21,7 +41,7 @@ const (
 	Ascending  SortDirection = "ASC"
 )
 
-func GetSortDirection(s string) SortDirection {
+func ParseSortDirection(s string) SortDirection {
 	dir := Descending
 	if s == "ascending" {
 		dir = Ascending
@@ -29,12 +49,47 @@ func GetSortDirection(s string) SortDirection {
 	return dir
 }
 
-func GetSortBy(s string) SortBy {
-	by := PostDate
+func ParseReviewSortBy(s string) ReviewSortBy {
+	by := RevPostDate
 
 	if s == "rating" {
-		by = Rating
+		by = RevRating
 	}
 
 	return by
+}
+
+func ParseCommentSortBy(s string) CommentSortBy {
+	by := ComPostDate
+
+	if s == "likes" {
+		by = ComLikes
+	}
+
+	return by
+}
+
+func (o ReviewSortOptions) GetBy() string {
+	return string(o.By)
+}
+func (o CommentSortOptions) GetBy() string {
+	return string(o.By)
+}
+func (o ReviewSortOptions) GetDirection() string {
+	return string(o.Direction)
+}
+func (o CommentSortOptions) GetDirection() string {
+	return string(o.Direction)
+}
+func (o ReviewSortOptions) GetLimit() uint {
+	return uint(o.Limit)
+}
+func (o CommentSortOptions) GetLimit() uint {
+	return uint(o.Limit)
+}
+func (o ReviewSortOptions) GetPage() uint {
+	return uint(o.Page)
+}
+func (o CommentSortOptions) GetPage() uint {
+	return uint(o.Page)
 }

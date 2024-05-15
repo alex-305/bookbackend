@@ -1,15 +1,14 @@
 package db
 
 import (
-	"database/sql"
-	"fmt"
 	"log"
 
+	"github.com/alex-305/bookbackend/db/helpers"
 	"github.com/alex-305/bookbackend/models"
 )
 
-func (db DB) GetUserReviewList(username string, o models.SortOptions) ([]models.Review, error) {
-	query := fmt.Sprintf(`SELECT * FROM reviews WHERE username = $1 ORDER BY %s %s LIMIT %d OFFSET %d;`, o.By, o.Direction, o.Limit, o.Page*o.Limit)
+func (db DB) GetUserReviewList(username string, o models.ReviewSortOptions) ([]models.Review, error) {
+	query := helpers.Format(`SELECT * FROM reviews WHERE username = $1`, o)
 
 	log.Printf("%s", query)
 
@@ -17,10 +16,12 @@ func (db DB) GetUserReviewList(username string, o models.SortOptions) ([]models.
 
 	if err != nil {
 		log.Printf("%s", err)
-		rows.Close()
 		return []models.Review{}, err
 	}
-	return db.getReviewList(rows)
+
+	defer rows.Close()
+
+	return helpers.GetReviewList(rows)
 }
 
 func (db DB) GetUserReviewCount(username string) int {
@@ -28,56 +29,28 @@ func (db DB) GetUserReviewCount(username string) int {
 	return db.getReviewCount(query, username)
 }
 
-func (db DB) GetBookReviewList(worksID string, o models.SortOptions) ([]models.Review, error) {
-	query := fmt.Sprintf(`SELECT * FROM reviews WHERE worksID = $1 ORDER BY %s %s LIMIT %d OFFSET %d`, o.By, o.Direction, o.Limit, o.Page*o.Limit)
+func (db DB) GetBookReviewList(volumeID string, o models.ReviewSortOptions) ([]models.Review, error) {
+	query := helpers.Format(`SELECT * FROM reviews WHERE volumeid = $1`, o)
 
-	rows, err := db.Query(query, worksID)
+	rows, err := db.Query(query, volumeID)
+
 	if err != nil {
-		rows.Close()
+		log.Printf("%s", err)
 		return []models.Review{}, err
 	}
-	return db.getReviewList(rows)
+
+	defer rows.Close()
+
+	return helpers.GetReviewList(rows)
 }
 
-func (db DB) GetBookReviewCount(worksID string) int {
-	query := `SELECT COUNT(*) FROM reviews WHERE worksID = $1`
-	return db.getReviewCount(query, worksID)
+func (db DB) GetBookReviewCount(volumeID string) int {
+	query := `SELECT COUNT(*) FROM reviews WHERE volumeid = $1`
+	return db.getReviewCount(query, volumeID)
 }
 
 func (db DB) getReviewCount(query, param string) int {
 	var count int
 	_ = db.QueryRow(query, param).Scan(&count)
 	return count
-}
-
-func (db DB) getReviewList(rows *sql.Rows) ([]models.Review, error) {
-
-	defer rows.Close()
-
-	var reviews []models.Review
-
-	for rows.Next() {
-		var review models.Review
-
-		var rating *uint8
-		var content sql.NullString
-
-		err := rows.Scan(&review.Username, &review.WorksID, &review.ReviewID, &content, &rating, &review.Post_date)
-
-		if err != nil {
-			return []models.Review{}, err
-		}
-
-		if rating != nil {
-			review.Rating = rating
-		}
-
-		if content.Valid {
-			review.Content = content.String
-		}
-
-		reviews = append(reviews, review)
-	}
-
-	return reviews, nil
 }

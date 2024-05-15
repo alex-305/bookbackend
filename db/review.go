@@ -5,10 +5,10 @@ import (
 )
 
 func (db *DB) PostReview(username string, rev models.Review) (string, error) {
-	query := `INSERT INTO reviews(username, worksID, content, rating) VALUES($1, $2, $3, $4) RETURNING reviewID;`
+	query := `INSERT INTO reviews(username, volumeid, content, rating) VALUES($1, $2, $3, $4) RETURNING reviewID;`
 
 	var reviewid string
-	err := db.QueryRow(query, username, rev.WorksID, rev.Content, rev.Rating).Scan(&reviewid)
+	err := db.QueryRow(query, username, rev.VolumeID, rev.Content, rev.Rating).Scan(&reviewid)
 
 	if err != nil {
 		return "", err
@@ -29,10 +29,10 @@ func (db *DB) DeleteReview(reviewid string) error {
 }
 
 func (db *DB) GetReview(reviewid string) (models.Review, error) {
-	query := `SELECT username, worksid, reviewid, content, rating, post_date FROM reviews WHERE reviewid = $1`
+	query := `SELECT username, volumeid, reviewid, content, rating, post_date FROM reviews WHERE reviewid = $1`
 
 	var rev models.Review
-	err := db.QueryRow(query, reviewid).Scan(&rev.Username, &rev.WorksID, &rev.ReviewID, &rev.Content, &rev.Rating, &rev.Post_date)
+	err := db.QueryRow(query, reviewid).Scan(&rev.Username, &rev.VolumeID, &rev.ReviewID, &rev.Content, &rev.Rating, &rev.Post_date)
 
 	if err != nil {
 		return models.Review{}, err

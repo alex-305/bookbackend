@@ -5,6 +5,6 @@ import (
 	"github.com/alex-305/bookbackend/models"
 )
 
-func GetUser(username string, o models.SortOptions, db *db.DB) ([]models.Review, error) {
+func GetUser(username string, o models.ReviewSortOptions, db *db.DB) ([]models.Review, error) {
 	return db.GetUserReviewList(username, o)
 }
