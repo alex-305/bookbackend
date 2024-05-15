@@ -40,7 +40,7 @@ CREATE TABLE reviews (
     volumeID VARCHAR(30) NOT NULL,
     reviewID VARCHAR(20) DEFAULT genAlphaNum(NEXTVAL('revID')),
     content VARCHAR(500),
-    rating SMALLINT,
+    rating SMALLINT NOT NULL DEFAULT 0,
     post_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
     --Potentially should make an index on username
