@@ -10,8 +10,6 @@ import (
 func (db DB) GetUserReviewList(username string, o models.ReviewSortOptions) ([]models.Review, error) {
 	query := helpers.Format(`SELECT * FROM reviews WHERE username = $1`, o)
 
-	log.Printf("%s", query)
-
 	rows, err := db.Query(query, username)
 
 	if err != nil {
