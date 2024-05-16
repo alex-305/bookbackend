@@ -20,13 +20,13 @@ func SignUp(creds models.Credentials, db *db.DB) (models.Token, error) {
 	ok := helpers.ValidateUsername(creds.Username)
 
 	if !ok {
-		return "", errors.New("invalid username")
+		return "", errors.New("invalid credentials")
 	}
 
 	ok = helpers.ValidateEmail(creds.Email)
 
 	if !ok {
-		return "", errors.New("invalid email")
+		return "", errors.New("invalid credentials")
 	}
 
 	creds.Password = hashedPassword

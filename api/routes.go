@@ -36,9 +36,9 @@ func (s *APIServer) defineRoutes(router *mux.Router) {
 	router.HandleFunc("/user/{username}/reviews/count", makeHttp(reviewlist.HandleGetUserCount, s.DB)).Methods(http.MethodGet)
 	//Book Review List
 	//router.HandleFunc("/reviews/popular", makeHttp(reviewList.HandleGetPopular, s.DB)).Methods(http.MethodGet)
-	router.HandleFunc("/book/{volumeid}/stats", makeHttp(book.HandleGet, s.DB)).Methods(http.MethodGet)
-	router.HandleFunc("/book/{volumeid}/reviews", makeHttp(reviewlist.HandleGetBook, s.DB)).Methods(http.MethodGet)
-	router.HandleFunc("/book/{volumeid}/reviews/count", makeHttp(reviewlist.HandleGetBookCount, s.DB)).Methods(http.MethodGet)
+	router.HandleFunc("/volume/{volumeid}/stats", makeHttp(book.HandleGet, s.DB)).Methods(http.MethodGet)
+	router.HandleFunc("/volume/{volumeid}/reviews", makeHttp(reviewlist.HandleGetBook, s.DB)).Methods(http.MethodGet)
+	router.HandleFunc("/volume/{volumeid}/reviews/count", makeHttp(reviewlist.HandleGetBookCount, s.DB)).Methods(http.MethodGet)
 	//Reply Routes
 	router.HandleFunc("/review/{reviewid}/comment", makeHttp(comment.HandlePost, s.DB)).Methods(http.MethodPost)
 	router.HandleFunc("/review/{reviewid}/comments", makeHttp(commentlist.HandleGetReview, s.DB)).Methods(http.MethodGet)
