@@ -5,6 +5,7 @@ import (
 
 	"github.com/alex-305/bookbackend/db"
 	"github.com/alex-305/bookbackend/handlers/auth"
+	"github.com/alex-305/bookbackend/handlers/book"
 	"github.com/alex-305/bookbackend/handlers/comment"
 	"github.com/alex-305/bookbackend/handlers/comment/commentlist"
 	"github.com/alex-305/bookbackend/handlers/review"
@@ -35,6 +36,7 @@ func (s *APIServer) defineRoutes(router *mux.Router) {
 	router.HandleFunc("/user/{username}/reviews/count", makeHttp(reviewlist.HandleGetUserCount, s.DB)).Methods(http.MethodGet)
 	//Book Review List
 	//router.HandleFunc("/reviews/popular", makeHttp(reviewList.HandleGetPopular, s.DB)).Methods(http.MethodGet)
+	router.HandleFunc("/book/{volumeid}/stats", makeHttp(book.HandleGet, s.DB)).Methods(http.MethodGet)
 	router.HandleFunc("/book/{volumeid}/reviews", makeHttp(reviewlist.HandleGetBook, s.DB)).Methods(http.MethodGet)
 	router.HandleFunc("/book/{volumeid}/reviews/count", makeHttp(reviewlist.HandleGetBookCount, s.DB)).Methods(http.MethodGet)
 	//Reply Routes

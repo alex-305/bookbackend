@@ -20,8 +20,8 @@ INSERT INTO reviews(username, volumeID, content) VALUES('ted', 'cyrMu-gkGQQC', '
 INSERT INTO reviews(username, volumeID, content, rating) VALUES('ted', '8nt0-BeF2rUC', 'not sure why this young fella was so upset but I wasnt a fan', 3) RETURNING reviewID;
 INSERT INTO reviews(username, volumeID, content, rating) VALUES('ted', '4Fs_DwAAQBAJ', 'This sucked ngl didnt like it at all', 2) RETURNING reviewID;
 INSERT INTO reviews(username, volumeID, content, rating) VALUES('ted', 'U68lAAAAMAAJ', 'Loved this book so good', 8) RETURNING reviewID;
-INSERT INTO reviews(username, volumeID, content) VALUES('ted', '9XzIAwAAQBAJ', 'mid', 5) RETURNING reviewID;
-INSERT INTO reviews(username, volumeID, content) VALUES('ted', 'Dba3EAAAQBAJ', 'bro I think im transcended', 5) RETURNING reviewID;
+INSERT INTO reviews(username, volumeID, content, rating) VALUES('ted', '9XzIAwAAQBAJ', 'mid', 5) RETURNING reviewID;
+INSERT INTO reviews(username, volumeID, content, rating) VALUES('ted', 'Dba3EAAAQBAJ', 'bro I think im transcended', 5) RETURNING reviewID;
 
 --Comments
 INSERT INTO comments(username, reviewid, content) VALUES('john','1', 'Yeah I thought it was pretty good as well') RETURNING commentid;
