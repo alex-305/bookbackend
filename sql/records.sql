@@ -1,5 +1,5 @@
 --Users
-INSERT INTO users(username, password, email) VALUES('ted', '$2a$10$NxMO/aiddukYPXCM7/riCeKETTOUYEcGyBfMDxBpwxVZIU/eOPE12', 'ted@mail.com');
+INSERT INTO users(username, password, email, description) VALUES('ted', '$2a$10$NxMO/aiddukYPXCM7/riCeKETTOUYEcGyBfMDxBpwxVZIU/eOPE12', 'ted@mail.com', 'Hi my name is Ted and I am the primary testing account of bookdom.');
 INSERT INTO users(username, password, email) VALUES('john', '$2a$10$NxMO/aiddukYPXCM7/riCeKETTOUYEcGyBfMDxBpwxVZIU/eOPE12', 'john@mail.com');
 INSERT INTO users(username, password, email) VALUES('fred', '$2a$10$NxMO/aiddukYPXCM7/riCeKETTOUYEcGyBfMDxBpwxVZIU/eOPE12', 'fred@mail.com');
 INSERT INTO users(username, password, email) VALUES('ned', '$2a$10$NxMO/aiddukYPXCM7/riCeKETTOUYEcGyBfMDxBpwxVZIU/eOPE12', 'ned@mail.com');
