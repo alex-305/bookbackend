@@ -11,7 +11,7 @@ services:
       - DATABASE_HOST=${DB_HOST}
       - DATABASE_PORT=${DB_PORT}
     volumes:
-      - .:/src
+      - .:/app
     restart: on-failure
     depends_on:
       - db
