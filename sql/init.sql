@@ -39,11 +39,9 @@ CREATE TABLE reviews (
     username VARCHAR(30) NOT NULL,
     volumeID VARCHAR(30) NOT NULL,
     reviewID VARCHAR(20) DEFAULT genAlphaNum(NEXTVAL('revID')),
-    content VARCHAR(500),
+    content VARCHAR(3000),
     rating SMALLINT NOT NULL DEFAULT 0,
     post_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-
-    --Potentially should make an index on username
 
     --Constraints
     CONSTRAINT chk_rating_change CHECK (rating >= 0 AND rating <= 10),
@@ -55,7 +53,7 @@ CREATE TABLE reviews (
 CREATE TABLE comments (
     reviewID VARCHAR(20) NOT NULL,
     commentID VARCHAR(20) DEFAULT genAlphaNum(NEXTVAL('comID')),
-    content VARCHAR(500) NOT NULL,
+    content VARCHAR(1000) NOT NULL,
     username VARCHAR(30) NOT NULL,
     post_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     likecount BIGINT NOT NULL DEFAULT 0,
@@ -99,3 +97,7 @@ CREATE TABLE user_follows_user (
 
     PRIMARY KEY(follower, followed)
 );
+
+--Indexes
+CREATE INDEX VolumeReviewIndex ON reviews(volumeID);
+CREATE INDEX UserReviewIndex ON reviews(username);
