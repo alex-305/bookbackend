@@ -15,7 +15,7 @@ func GetReviewList(rows *sql.Rows) ([]models.Review, error) {
 
 		var content sql.NullString
 
-		err := rows.Scan(&review.Username, &review.VolumeID, &review.ReviewID, &content, &review.Rating, &review.Post_date)
+		err := rows.Scan(&review.Username, &review.VolumeID, &review.ReviewID, &content, &review.Rating, &review.Post_date, &review.LikeCount)
 
 		if err != nil {
 			return []models.Review{}, err

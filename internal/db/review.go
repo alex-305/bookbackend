@@ -29,10 +29,10 @@ func (db *DB) DeleteReview(reviewid string) error {
 }
 
 func (db *DB) GetReview(reviewid string) (models.Review, error) {
-	query := `SELECT username, volumeid, reviewid, content, rating, post_date FROM reviews WHERE reviewid = $1`
+	query := `SELECT username, volumeid, reviewid, content, rating, post_date, likecount FROM reviews WHERE reviewid = $1`
 
 	var rev models.Review
-	err := db.QueryRow(query, reviewid).Scan(&rev.Username, &rev.VolumeID, &rev.ReviewID, &rev.Content, &rev.Rating, &rev.Post_date)
+	err := db.QueryRow(query, reviewid).Scan(&rev.Username, &rev.VolumeID, &rev.ReviewID, &rev.Content, &rev.Rating, &rev.Post_date, rev.LikeCount)
 
 	if err != nil {
 		return models.Review{}, err

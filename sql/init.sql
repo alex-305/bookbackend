@@ -42,6 +42,7 @@ CREATE TABLE reviews (
     content VARCHAR(3000),
     rating SMALLINT NOT NULL DEFAULT 0,
     post_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    likecount BIGINT NOT NULL DEFAULT 0,
 
     --Constraints
     CONSTRAINT chk_rating_change CHECK (rating >= 0 AND rating <= 10),

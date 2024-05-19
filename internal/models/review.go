@@ -9,4 +9,5 @@ type Review struct {
 	VolumeID  string    `json:"volumeid"`
 	ReviewID  string    `json:"reviewid"`
 	Post_date time.Time `json:"post_date"`
+	LikeCount uint      `json:"likecount"`
 }
