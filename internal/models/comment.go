@@ -10,3 +10,8 @@ type Comment struct {
 	Post_date time.Time `json:"post_date"`
 	LikeCount uint      `json:"likecount"`
 }
+
+type CommentList struct {
+	Comments     []Comment `json:"comments"`
+	CommentCount uint      `json:"commentcount"`
+}

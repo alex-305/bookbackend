@@ -11,3 +11,8 @@ type Review struct {
 	Post_date time.Time `json:"post_date"`
 	LikeCount uint      `json:"likecount"`
 }
+
+type ReviewList struct {
+	Reviews     []Review `json:"reviews"`
+	ReviewCount uint     `json:"reviewcount"`
+}
