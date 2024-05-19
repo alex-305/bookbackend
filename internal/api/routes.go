@@ -7,43 +7,50 @@ import (
 	"github.com/alex-305/bookbackend/internal/handlers/auth"
 	"github.com/alex-305/bookbackend/internal/handlers/book"
 	"github.com/alex-305/bookbackend/internal/handlers/comment"
+	"github.com/alex-305/bookbackend/internal/handlers/comment/commentlikes"
 	"github.com/alex-305/bookbackend/internal/handlers/comment/commentlist"
 	"github.com/alex-305/bookbackend/internal/handlers/review"
+	"github.com/alex-305/bookbackend/internal/handlers/review/reviewlikes"
 	"github.com/alex-305/bookbackend/internal/handlers/review/reviewlist"
 	"github.com/alex-305/bookbackend/internal/handlers/swagger"
 	"github.com/alex-305/bookbackend/internal/handlers/user"
 	"github.com/gorilla/mux"
 )
 
-func (s *APIServer) defineRoutes(router *mux.Router) {
+func (s *APIServer) defineRoutes(r *mux.Router) {
 	//Swagger
-	router.PathPrefix("/swagger/").Handler(http.StripPrefix("/swagger/", http.FileServer(http.Dir("./docs/swagger/node_modules/swagger-ui-dist/"))))
-	router.HandleFunc("/swagger-ui/", swagger.Handle)
+	r.PathPrefix("/swagger/").Handler(http.StripPrefix("/swagger/", http.FileServer(http.Dir("./docs/swagger/node_modules/swagger-ui-dist/"))))
+	r.HandleFunc("/swagger-ui/", swagger.Handle)
 	//Auth Routes
-	router.HandleFunc("/login", makeHttp(auth.HandleLogin, s.DB)).Methods(http.MethodPost)
-	router.HandleFunc("/signup", makeHttp(auth.HandleSignUp, s.DB)).Methods(http.MethodPost)
+	r.HandleFunc("/login", makeHttp(auth.HandleLogin, s.DB)).Methods(http.MethodPost)
+	r.HandleFunc("/signup", makeHttp(auth.HandleSignUp, s.DB)).Methods(http.MethodPost)
 	//User Routes
-	router.HandleFunc("/user/{username}", makeHttp(user.HandleGetUser, s.DB)).Methods(http.MethodGet)
-	router.HandleFunc("/user/{username}/description", makeHttp(user.HandlePatchDesc, s.DB)).Methods(http.MethodPatch)
-	router.HandleFunc("/user/{username}/password", makeHttp(user.HandlePatchPass, s.DB)).Methods(http.MethodPatch)
+	r.HandleFunc("/user/{username}", makeHttp(user.HandleGetUser, s.DB)).Methods(http.MethodGet)
+	r.HandleFunc("/user/{username}/description", makeHttp(user.HandlePatchDesc, s.DB)).Methods(http.MethodPatch)
+	r.HandleFunc("/user/{username}/password", makeHttp(user.HandlePatchPass, s.DB)).Methods(http.MethodPatch)
 	//Review Routes
-	router.HandleFunc("/review", makeHttp(review.HandlePost, s.DB)).Methods(http.MethodPost)
-	router.HandleFunc("/review/{reviewid}", makeHttp(review.HandlePut, s.DB)).Methods(http.MethodPut)
-	router.HandleFunc("/review/{reviewid}", makeHttp(review.HandleDelete, s.DB)).Methods(http.MethodDelete)
-	router.HandleFunc("/review/{reviewid}", rateLimit(makeHttp(review.HandleGet, s.DB))).Methods(http.MethodGet)
+	r.HandleFunc("/review", makeHttp(review.HandlePost, s.DB)).Methods(http.MethodPost)
+	r.HandleFunc("/review/{reviewid}", makeHttp(review.HandlePut, s.DB)).Methods(http.MethodPut)
+	r.HandleFunc("/review/{reviewid}", makeHttp(review.HandleDelete, s.DB)).Methods(http.MethodDelete)
+	r.HandleFunc("/review/{reviewid}", makeHttp(review.HandleGet, s.DB)).Methods(http.MethodGet)
+	//Review Like Routes
+	r.HandleFunc("/review/{reviewid}/likes", makeHttp(reviewlikes.HandlePost, s.DB)).Methods(http.MethodPost)
+	r.HandleFunc("/review/{reviewid}/likes", makeHttp(reviewlikes.HandleDelete, s.DB)).Methods(http.MethodDelete)
 	//User Review List
-	router.HandleFunc("/user/{username}/reviews", makeHttp(reviewlist.HandleGetUser, s.DB)).Methods(http.MethodGet)
-	router.HandleFunc("/user/{username}/reviews/count", makeHttp(reviewlist.HandleGetUserCount, s.DB)).Methods(http.MethodGet)
+	r.HandleFunc("/user/{username}/reviews", makeHttp(reviewlist.HandleGetUser, s.DB)).Methods(http.MethodGet)
+	r.HandleFunc("/user/{username}/reviews/count", makeHttp(reviewlist.HandleGetUserCount, s.DB)).Methods(http.MethodGet)
 	//Book Review List
-	//router.HandleFunc("/reviews/popular", makeHttp(reviewList.HandleGetPopular, s.DB)).Methods(http.MethodGet)
-	router.HandleFunc("/volume/{volumeid}/stats", makeHttp(book.HandleGet, s.DB)).Methods(http.MethodGet)
-	router.HandleFunc("/volume/{volumeid}/reviews", makeHttp(reviewlist.HandleGetBook, s.DB)).Methods(http.MethodGet)
-	router.HandleFunc("/volume/{volumeid}/reviews/count", makeHttp(reviewlist.HandleGetBookCount, s.DB)).Methods(http.MethodGet)
+	//r.HandleFunc("/reviews/popular", makeHttp(reviewList.HandleGetPopular, s.DB)).Methods(http.MethodGet)
+	r.HandleFunc("/volume/{volumeid}/stats", makeHttp(book.HandleGet, s.DB)).Methods(http.MethodGet)
+	r.HandleFunc("/volume/{volumeid}/reviews", makeHttp(reviewlist.HandleGetBook, s.DB)).Methods(http.MethodGet)
+	r.HandleFunc("/volume/{volumeid}/reviews/count", makeHttp(reviewlist.HandleGetBookCount, s.DB)).Methods(http.MethodGet)
 	//Comment Routes
-	router.HandleFunc("/review/{reviewid}/comments", makeHttp(comment.HandlePost, s.DB)).Methods(http.MethodPost)
-	router.HandleFunc("/review/{reviewid}/comments", makeHttp(commentlist.HandleGetReview, s.DB)).Methods(http.MethodGet)
-	//router.HandleFunc("/comment/{commentid}", makeHttp(comment.HandleGet, s.DB)).Methods(http.MethodGet)
-	//Like Routes
+	r.HandleFunc("/review/{reviewid}/comments", makeHttp(comment.HandlePost, s.DB)).Methods(http.MethodPost)
+	r.HandleFunc("/review/{reviewid}/comments", makeHttp(commentlist.HandleGetReview, s.DB)).Methods(http.MethodGet)
+	r.HandleFunc("/comment/{commentid}", makeHttp(comment.HandleDelete, s.DB)).Methods(http.MethodDelete)
+	//Comment Like Routes
+	r.HandleFunc("/comment/{commentid}/likes", makeHttp(commentlikes.HandlePost, s.DB)).Methods(http.MethodPost)
+	r.HandleFunc("/comment/{commentid}/likes", makeHttp(commentlikes.HandleDelete, s.DB)).Methods(http.MethodDelete)
 
 }
 
