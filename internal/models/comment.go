@@ -11,7 +11,6 @@ type Comment struct {
 	LikeCount uint      `json:"likecount"`
 }
 
-type CommentList struct {
-	Comments     []Comment `json:"comments"`
-	CommentCount uint      `json:"commentcount"`
+type CommentStats struct {
+	CommentCount uint `json:"commentcount"`
 }

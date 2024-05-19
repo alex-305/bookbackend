@@ -5,6 +5,6 @@ import (
 	"github.com/alex-305/bookbackend/internal/models"
 )
 
-func GetBook(volumeid string, o models.ReviewSortOptions, db *db.DB) (models.ReviewList, error) {
+func GetBook(volumeid string, o models.ReviewSortOptions, db *db.DB) ([]models.Review, error) {
 	return db.GetBookReviewList(volumeid, o)
 }

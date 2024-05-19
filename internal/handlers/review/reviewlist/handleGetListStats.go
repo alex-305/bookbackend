@@ -8,14 +8,13 @@ import (
 	"github.com/gorilla/mux"
 )
 
-func HandleGetUserCount(w http.ResponseWriter, r *http.Request, db *db.DB) {
+func HandleGetStats(w http.ResponseWriter, r *http.Request, db *db.DB) {
 	vars := mux.Vars(r)
 	username := vars["username"]
 
-	count := db.GetUserReviewCount(username)
+	stats := db.GetUserReviewStats(username)
 
-	countJSON := map[string]int{"count": count}
-	response, err := json.Marshal(countJSON)
+	response, err := json.Marshal(stats)
 
 	if err != nil {
 		http.Error(w, "Could not parse json response", http.StatusInternalServerError)

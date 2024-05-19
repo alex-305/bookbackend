@@ -5,13 +5,14 @@ import (
 
 	"github.com/alex-305/bookbackend/internal/db"
 	"github.com/alex-305/bookbackend/internal/handlers/auth"
-	"github.com/alex-305/bookbackend/internal/handlers/book"
 	"github.com/alex-305/bookbackend/internal/handlers/comment"
 	"github.com/alex-305/bookbackend/internal/handlers/comment/commentlikes"
 	"github.com/alex-305/bookbackend/internal/handlers/comment/commentlist"
 	"github.com/alex-305/bookbackend/internal/handlers/review"
 	"github.com/alex-305/bookbackend/internal/handlers/review/reviewlikes"
 	"github.com/alex-305/bookbackend/internal/handlers/review/reviewlist"
+	"github.com/alex-305/bookbackend/internal/handlers/review/reviewlist/reviewliststats"
+	"github.com/alex-305/bookbackend/internal/handlers/review/reviewstats"
 	"github.com/alex-305/bookbackend/internal/handlers/swagger"
 	"github.com/alex-305/bookbackend/internal/handlers/user"
 	"github.com/gorilla/mux"
@@ -38,14 +39,15 @@ func (s *APIServer) defineRoutes(r *mux.Router) {
 	r.HandleFunc("/review/{reviewid}/likes", makeHttp(reviewlikes.HandleDelete, s.DB)).Methods(http.MethodDelete)
 	//User Review List
 	r.HandleFunc("/user/{username}/reviews", makeHttp(reviewlist.HandleGetUser, s.DB)).Methods(http.MethodGet)
-	r.HandleFunc("/user/{username}/reviews/count", makeHttp(reviewlist.HandleGetUserCount, s.DB)).Methods(http.MethodGet)
+	r.HandleFunc("/user/{username}/reviews/stats", makeHttp(reviewliststats.HandleGetUser, s.DB)).Methods(http.MethodGet)
 	//Book Review List
 	//r.HandleFunc("/reviews/popular", makeHttp(reviewList.HandleGetPopular, s.DB)).Methods(http.MethodGet)
-	r.HandleFunc("/volume/{volumeid}/stats", makeHttp(book.HandleGet, s.DB)).Methods(http.MethodGet)
+	r.HandleFunc("/volume/{volumeid}/stats", makeHttp(reviewliststats.HandleGetBook, s.DB)).Methods(http.MethodGet)
 	r.HandleFunc("/volume/{volumeid}/reviews", makeHttp(reviewlist.HandleGetBook, s.DB)).Methods(http.MethodGet)
 	//Comment Routes
 	r.HandleFunc("/review/{reviewid}/comments", makeHttp(comment.HandlePost, s.DB)).Methods(http.MethodPost)
 	r.HandleFunc("/review/{reviewid}/comments", makeHttp(commentlist.HandleGetReview, s.DB)).Methods(http.MethodGet)
+	r.HandleFunc("/review/{reviewid}/stats", makeHttp(reviewstats.HandleGet, s.DB)).Methods(http.MethodGet)
 	r.HandleFunc("/comment/{commentid}", makeHttp(comment.HandleDelete, s.DB)).Methods(http.MethodDelete)
 	//Comment Like Routes
 	r.HandleFunc("/comment/{commentid}/likes", makeHttp(commentlikes.HandlePost, s.DB)).Methods(http.MethodPost)

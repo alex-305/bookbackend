@@ -6,9 +6,9 @@ import (
 	"github.com/alex-305/bookbackend/internal/models"
 )
 
-func GetReviewList(rows *sql.Rows) (models.ReviewList, error) {
+func GetReviewList(rows *sql.Rows) ([]models.Review, error) {
 
-	var reviewList models.ReviewList
+	var reviewList []models.Review
 	count := uint(0)
 	for rows.Next() {
 		count++
@@ -19,16 +19,15 @@ func GetReviewList(rows *sql.Rows) (models.ReviewList, error) {
 		err := rows.Scan(&review.Username, &review.VolumeID, &review.ReviewID, &content, &review.Rating, &review.Post_date, &review.LikeCount)
 
 		if err != nil {
-			return models.ReviewList{}, err
+			return []models.Review{}, err
 		}
 
 		if content.Valid {
 			review.Content = content.String
 		}
 
-		reviewList.Reviews = append(reviewList.Reviews, review)
+		reviewList = append(reviewList, review)
 	}
-	reviewList.ReviewCount = count
 
 	return reviewList, nil
 }
