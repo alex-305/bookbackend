@@ -12,7 +12,7 @@ func (db DB) PostCommentLikes(user, commentid string) error {
 		return err
 	}
 
-	_, err = tx.Exec(`INSERT INTO user_likes_comments(username, commentid) VALUES($1,$2)`, user, commentid)
+	_, err = tx.Exec(`INSERT INTO user_likes_comment(username, commentid) VALUES($1,$2)`, user, commentid)
 
 	if err != nil {
 		tx.Rollback()
@@ -34,7 +34,7 @@ func (db DB) DeleteCommentLikes(user, commentid string) error {
 		return err
 	}
 
-	_, err = tx.Exec(`DELETE FROM comments WHERE username = $1 AND commentid = $2`, user, commentid)
+	_, err = tx.Exec(`DELETE FROM user_likes_comment WHERE username = $1 AND commentid = $2`, user, commentid)
 
 	if err != nil {
 		tx.Rollback()

@@ -8,7 +8,7 @@ import (
 )
 
 func (db DB) GetUserReviewList(username string, o models.ReviewSortOptions) ([]models.Review, error) {
-	query := helpers.Format(`SELECT * FROM reviews WHERE username = $1`, o)
+	query := helpers.Format(`SELECT *, COUNT(*) AS reviewcount FROM reviews WHERE username = $1`, o)
 
 	rows, err := db.Query(query, username)
 

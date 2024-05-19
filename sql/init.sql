@@ -70,7 +70,7 @@ CREATE TABLE comments (
     PRIMARY KEY(commentID)
 );
 
-CREATE TABLE user_likes_reviews (
+CREATE TABLE user_likes_review (
     username VARCHAR(30) NOT NULL,
     reviewID VARCHAR(20) NOT NULL,
 
