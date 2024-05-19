@@ -25,8 +25,8 @@ INSERT INTO reviews(username, volumeID, content, rating) VALUES('ted', '9XzIAwAA
 INSERT INTO reviews(username, volumeID, content, rating) VALUES('ted', 'Dba3EAAAQBAJ', 'bro I think im transcended', 5);
 
 --Comments
-INSERT INTO comments(username, reviewid, content) VALUES('john','1', 'Yeah I thought it was pretty good as well') RETURNING commentid;
-INSERT INTO comments(username, reviewid, content) VALUES('fred','1', 'Idk tbh I didnt really enjoy it') RETURNING commentid;
-INSERT INTO comments(username, reviewid, content) VALUES('ned','1', 'This was genuinely one of the greatest books I have ever read @fred, fuck you.') RETURNING commentid;
-INSERT INTO comments(username, reviewid, content) VALUES('allen','1', 'I havent read this yet but @ned got me thinking I have to read this for sure.') RETURNING commentid;
-INSERT INTO comments(username, reviewid, content) VALUES('adam','1', 'Pretty good doesnt do it justice but alright') RETURNING commentid;
+INSERT INTO comments(username, reviewid, content) VALUES('john','1000', 'Yeah I thought it was pretty good as well') RETURNING commentid;
+INSERT INTO comments(username, reviewid, content) VALUES('fred','1000', 'Idk tbh I didnt really enjoy it') RETURNING commentid;
+INSERT INTO comments(username, reviewid, content) VALUES('ned','1000', 'This was genuinely one of the greatest books I have ever read @fred, fuck you.') RETURNING commentid;
+INSERT INTO comments(username, reviewid, content) VALUES('allen','1000', 'I havent read this yet but @ned got me thinking I have to read this for sure.') RETURNING commentid;
+INSERT INTO comments(username, reviewid, content) VALUES('adam','1000', 'Pretty good doesnt do it justice but alright') RETURNING commentid;
