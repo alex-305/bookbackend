@@ -16,7 +16,7 @@ func Put(reviewid string, rev models.Review, tok models.Token, d *db.DB) error {
 		return err
 	}
 
-	reviewToUpdate, err := d.GetReview(reviewid)
+	reviewToUpdate, err := d.GetReview(username, reviewid)
 
 	if err != nil {
 		return err

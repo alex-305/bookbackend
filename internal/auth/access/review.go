@@ -7,7 +7,7 @@ import (
 
 func Review(username, reviewid string, db *db.DB) error {
 	var review models.Review
-	review, err := db.GetReview(reviewid)
+	review, err := db.GetReview(username, reviewid)
 
 	if err != nil {
 		return err

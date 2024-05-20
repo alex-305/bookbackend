@@ -26,7 +26,7 @@ func (db *DB) GetCommentList(username string, o models.CommentSortOptions, ap mo
 	for rows.Next() {
 		var comment models.Comment
 
-		err := rows.Scan(&comment.ReviewID, &comment.CommentID, &comment.Content, &comment.Username, &comment.Post_date, &comment.LikeCount, &comment.IsLiked)
+		err := rows.Scan(&comment.CommentID, &comment.ReviewID, &comment.Content, &comment.Username, &comment.Post_date, &comment.LikeCount, &comment.IsLiked)
 
 		if err != nil {
 			return []models.Comment{}, err

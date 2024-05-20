@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/alex-305/bookbackend/internal/db"
+	"github.com/alex-305/bookbackend/internal/handlers/helpers"
 	"github.com/alex-305/bookbackend/internal/services/reviewsvc"
 	"github.com/gorilla/mux"
 )
@@ -19,7 +20,9 @@ func HandleGet(w http.ResponseWriter, r *http.Request, d *db.DB) {
 	vars := mux.Vars(r)
 	reviewid := vars["reviewid"]
 
-	review, err := reviewsvc.Get(reviewid, d)
+	tok, _ := helpers.GetToken(r)
+
+	review, err := reviewsvc.Get(reviewid, tok, d)
 
 	if err != nil {
 		log.Printf("%s", err)
