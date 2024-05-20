@@ -29,7 +29,7 @@ func (db *DB) DeleteReview(reviewid string) error {
 }
 
 func (db *DB) GetReview(username, reviewid string) (models.Review, error) {
-	query := `SELECT r.username, r.volumeid, r.reviewid, r.content, r.rating, r.post_date, r.likecount FROM reviews
+	query := `SELECT r.username, r.volumeid, r.reviewid, r.content, r.rating, r.post_date, r.likecount, FROM reviews
 	CASE WHEN ulr.username IS NOT NULL THEN TRUE ELSE FALSE END AS isLiked FROM reviews r LEFT JOIN user_likes_review ulr ON r.reviewid=ulr.reviewid AND ulr.username=$1 WHERE r.reviewid = $2`
 
 	var rev models.Review
