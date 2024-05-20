@@ -8,7 +8,7 @@ func (db DB) GetBookReviewStats(volumeID string) models.ReviewListStats {
 }
 
 func (db DB) GetUserReviewStats(username string) models.ReviewListStats {
-	query := `SELECT COUNT(*), AVG(rating) FROM reviews WHERE username = $1`
+	query := `SELECT COUNT(*) AS reviewcount, AVG(rating) AS avgrating FROM reviews WHERE username = $1`
 	return db.getReviewListStats(query, username)
 }
 
