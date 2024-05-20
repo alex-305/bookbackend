@@ -9,6 +9,7 @@ type Comment struct {
 	ReviewID  string    `json:"reviewid"`
 	Post_date time.Time `json:"post_date"`
 	LikeCount uint      `json:"likecount"`
+	IsLiked   bool      `json:"isLiked"`
 }
 
 type CommentStats struct {
