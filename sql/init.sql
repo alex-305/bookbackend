@@ -35,7 +35,8 @@ CREATE TABLE users (
     password CHAR(60) NOT NULL,
     email VARCHAR(100) NOT NULL,
     description VARCHAR(500) NOT NULL DEFAULT '',
-    join_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    join_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    followercount BIGINT NOT NULL DEFAULT 0,
     PRIMARY KEY(username)
 );
 
@@ -43,9 +44,9 @@ CREATE TABLE reviews (
     username VARCHAR(30) NOT NULL,
     volumeID VARCHAR(30) NOT NULL,
     reviewID VARCHAR(20) DEFAULT genAlphaNum(NEXTVAL('revID')),
-    content VARCHAR(3000),
+    content VARCHAR(3000) NOT NULL DEFAULT '',
     rating SMALLINT NOT NULL DEFAULT 0,
-    post_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    post_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     likecount BIGINT NOT NULL DEFAULT 0,
 
     --Constraints
@@ -57,10 +58,10 @@ CREATE TABLE reviews (
 
 CREATE TABLE comments (
     reviewID VARCHAR(20) NOT NULL,
-    commentID VARCHAR(20) DEFAULT genAlphaNum(NEXTVAL('comID')),
+    commentID VARCHAR(20) NOT NULL DEFAULT genAlphaNum(NEXTVAL('comID')),
     content VARCHAR(1000) NOT NULL,
     username VARCHAR(30) NOT NULL,
-    post_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    post_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     likecount BIGINT NOT NULL DEFAULT 0,
 
     --Constraints

@@ -8,6 +8,7 @@ import (
 	"github.com/alex-305/bookbackend/internal/handlers/comment"
 	"github.com/alex-305/bookbackend/internal/handlers/comment/commentlikes"
 	"github.com/alex-305/bookbackend/internal/handlers/comment/commentlist"
+	"github.com/alex-305/bookbackend/internal/handlers/follow"
 	"github.com/alex-305/bookbackend/internal/handlers/review"
 	"github.com/alex-305/bookbackend/internal/handlers/review/reviewlikes"
 	"github.com/alex-305/bookbackend/internal/handlers/review/reviewlist"
@@ -40,6 +41,9 @@ func (s *APIServer) defineRoutes(r *mux.Router) {
 	//User Review List
 	r.HandleFunc("/user/{username}/reviews", makeHttp(reviewlist.HandleGetUser, s.DB)).Methods(http.MethodGet)
 	r.HandleFunc("/user/{username}/reviews/stats", makeHttp(reviewliststats.HandleGetUser, s.DB)).Methods(http.MethodGet)
+	//Follow Routes
+	r.HandleFunc("/user/{username}/follows", makeHttp(follow.HandlePost, s.DB)).Methods(http.MethodPost)
+	r.HandleFunc("/user/{username}/follows", makeHttp(follow.HandleDelete, s.DB)).Methods(http.MethodDelete)
 	//Book Review List
 	//r.HandleFunc("/reviews/popular", makeHttp(reviewList.HandleGetPopular, s.DB)).Methods(http.MethodGet)
 	r.HandleFunc("/volume/{volumeid}/stats", makeHttp(reviewliststats.HandleGetBook, s.DB)).Methods(http.MethodGet)

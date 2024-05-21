@@ -30,3 +30,25 @@ INSERT INTO comments(username, reviewid, content) VALUES('fred','1000', 'Idk tbh
 INSERT INTO comments(username, reviewid, content) VALUES('ned','1000', 'This was genuinely one of the greatest books I have ever read @fred, fuck you.') RETURNING commentid;
 INSERT INTO comments(username, reviewid, content) VALUES('allen','1000', 'I havent read this yet but @ned got me thinking I have to read this for sure.') RETURNING commentid;
 INSERT INTO comments(username, reviewid, content) VALUES('adam','1000', 'Pretty good doesnt do it justice but alright') RETURNING commentid;
+
+--Comment Likes
+INSERT INTO user_likes_comment(username, commentID) VALUES('john','1000');
+INSERT INTO user_likes_comment(username, commentID) VALUES('fred','1000');
+INSERT INTO user_likes_comment(username, commentID) VALUES('ned','1000');
+INSERT INTO user_likes_comment(username, commentID) VALUES('john','1001');
+INSERT INTO user_likes_comment(username, commentID) VALUES('allen','1004');
+INSERT INTO user_likes_comment(username, commentID) VALUES('adam','1004');
+INSERT INTO user_likes_comment(username, commentID) VALUES('john','1004');
+
+--Review Likes
+INSERT INTO user_likes_review(username, reviewID) VALUES('john','1000')
+INSERT INTO user_likes_review(username, reviewID) VALUES('fred','1001')
+INSERT INTO user_likes_review(username, reviewID) VALUES('ned','1001')
+INSERT INTO user_likes_review(username, reviewID) VALUES('miles','1001')
+INSERT INTO user_likes_review(username, reviewID) VALUES('peter','1003')
+INSERT INTO user_likes_review(username, reviewID) VALUES('jane','1002')
+INSERT INTO user_likes_review(username, reviewID) VALUES('jane','1003')
+INSERT INTO user_likes_review(username, reviewID) VALUES('jane','1004')
+INSERT INTO user_likes_review(username, reviewID) VALUES('jane','1005')
+INSERT INTO user_likes_review(username, reviewID) VALUES('jane','1006')
+INSERT INTO user_likes_review(username, reviewID) VALUES('allen','1002')
