@@ -10,7 +10,7 @@ func (db *DB) PostFollow(follower, followed string) error {
 		return err
 	}
 
-	_, err = tx.Exec(`INSERT INTO(follower, followed) VALUES($1, $2)`)
+	_, err = tx.Exec(`INSERT INTO user_follows_user(follower, followed) VALUES($1, $2)`, follower, followed)
 
 	if err != nil {
 		tx.Rollback()

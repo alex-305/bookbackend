@@ -41,14 +41,14 @@ INSERT INTO user_likes_comment(username, commentID) VALUES('adam','1004');
 INSERT INTO user_likes_comment(username, commentID) VALUES('john','1004');
 
 --Review Likes
-INSERT INTO user_likes_review(username, reviewID) VALUES('john','1000')
-INSERT INTO user_likes_review(username, reviewID) VALUES('fred','1001')
-INSERT INTO user_likes_review(username, reviewID) VALUES('ned','1001')
-INSERT INTO user_likes_review(username, reviewID) VALUES('miles','1001')
-INSERT INTO user_likes_review(username, reviewID) VALUES('peter','1003')
-INSERT INTO user_likes_review(username, reviewID) VALUES('jane','1002')
-INSERT INTO user_likes_review(username, reviewID) VALUES('jane','1003')
-INSERT INTO user_likes_review(username, reviewID) VALUES('jane','1004')
-INSERT INTO user_likes_review(username, reviewID) VALUES('jane','1005')
-INSERT INTO user_likes_review(username, reviewID) VALUES('jane','1006')
-INSERT INTO user_likes_review(username, reviewID) VALUES('allen','1002')
+INSERT INTO user_likes_review(username, reviewID) VALUES('john','1000');
+INSERT INTO user_likes_review(username, reviewID) VALUES('fred','1001');
+INSERT INTO user_likes_review(username, reviewID) VALUES('ned','1001');
+INSERT INTO user_likes_review(username, reviewID) VALUES('miles','1001');
+INSERT INTO user_likes_review(username, reviewID) VALUES('peter','1003');
+INSERT INTO user_likes_review(username, reviewID) VALUES('jane','1002');
+INSERT INTO user_likes_review(username, reviewID) VALUES('jane','1003');
+INSERT INTO user_likes_review(username, reviewID) VALUES('jane','1004');
+INSERT INTO user_likes_review(username, reviewID) VALUES('jane','1005');
+INSERT INTO user_likes_review(username, reviewID) VALUES('jane','1006');
+INSERT INTO user_likes_review(username, reviewID) VALUES('allen','1002');
