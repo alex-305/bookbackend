@@ -73,6 +73,7 @@ CREATE TABLE comments (
 
 CREATE TABLE user_likes_review (
     username VARCHAR(30) NOT NULL,
+    likedate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     reviewID VARCHAR(20) NOT NULL,
 
     --Constraints
@@ -84,6 +85,7 @@ CREATE TABLE user_likes_review (
 
 CREATE TABLE user_likes_comment (
     username VARCHAR(30) NOT NULL,
+    likedate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     commentID VARCHAR(20) NOT NULL,
 
     --Constraints
@@ -95,6 +97,7 @@ CREATE TABLE user_likes_comment (
 
 CREATE TABLE user_follows_user (
     follower VARCHAR(30) NOT NULL,
+    followdate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     followed VARCHAR(30) NOT NULL,
 
     --Constraints
