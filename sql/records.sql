@@ -52,3 +52,16 @@ INSERT INTO user_likes_review(username, reviewID) VALUES('jane','1004');
 INSERT INTO user_likes_review(username, reviewID) VALUES('jane','1005');
 INSERT INTO user_likes_review(username, reviewID) VALUES('jane','1006');
 INSERT INTO user_likes_review(username, reviewID) VALUES('allen','1002');
+
+--Follows
+INSERT INTO user_follows_user(follower, followed) VALUES('ted','allen');
+INSERT INTO user_follows_user(follower, followed) VALUES('ted','peter');
+INSERT INTO user_follows_user(follower, followed) VALUES('ted','james');
+INSERT INTO user_follows_user(follower, followed) VALUES('allen','ted');
+INSERT INTO user_follows_user(follower, followed) VALUES('ned','ted');
+INSERT INTO user_follows_user(follower, followed) VALUES('john','ted');
+INSERT INTO user_follows_user(follower, followed) VALUES('fred','ted');
+INSERT INTO user_follows_user(follower, followed) VALUES('jane','ted');
+INSERT INTO user_follows_user(follower, followed) VALUES('peter','ted');
+INSERT INTO user_follows_user(follower, followed) VALUES('miles','ted');
+INSERT INTO user_follows_user(follower, followed) VALUES('james','ted');

@@ -103,6 +103,7 @@ CREATE TABLE user_follows_user (
     --Constraints
     CONSTRAINT fk_follower FOREIGN KEY(follower) REFERENCES users(username) ON DELETE CASCADE,
     CONSTRAINT fk_followed FOREIGN KEY(followed) REFERENCES users(username) ON DELETE CASCADE,
+    CHECK (follower <>followed),
 
     PRIMARY KEY(follower, followed)
 );
