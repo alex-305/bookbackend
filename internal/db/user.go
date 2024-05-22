@@ -7,10 +7,10 @@ import (
 )
 
 func (db *DB) GetUser(userusername, username string) (models.User, error) {
-	row := db.QueryRow("SELECT u.username, u.email, u.description, u.join_date, u.followercount, CASE WHEN ufu.follower IS NOT NULL THEN TRUE ELSE FALSE END AS doesfollow FROM users u LEFT JOIN user_follows_user ufu ON u.username=ufu.followed AND ufu.follower=$1 WHERE username = $2", userusername, username)
+	row := db.QueryRow("SELECT u.username, u.email, u.description, u.join_date, u.followercount, CASE WHEN ufu.follower IS NOT NULL THEN TRUE ELSE FALSE END AS isfollowing FROM users u LEFT JOIN user_follows_user ufu ON u.username=ufu.followed AND ufu.follower=$1 WHERE username = $2", userusername, username)
 
 	var user models.User
-	err := row.Scan(&user.Username, &user.Email, &user.Description, &user.Join_date, &user.FollowerCount, &user.DoesFollow)
+	err := row.Scan(&user.Username, &user.Email, &user.Description, &user.Join_date, &user.FollowerCount, &user.IsFollowing)
 
 	if err != nil {
 		return models.User{}, err
