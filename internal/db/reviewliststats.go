@@ -3,7 +3,7 @@ package db
 import "github.com/alex-305/bookbackend/internal/models"
 
 func (db DB) GetBookReviewStats(volumeID string) models.ReviewListStats {
-	query := `SELECT AVG(avguserrating) as avgrating, SUM(reviewcount) AS reviewcount FROM(SELECT AVG(rating) AS avguserrating, COUNT(*) AS reviewcount FROM reviews WHERE volumeid = $1 GROUP BY username);`
+	query := `SELECT SUM(reviewcount) AS reviewcount, AVG(avguserrating) as avgrating FROM(SELECT AVG(rating) AS avguserrating, COUNT(*) AS reviewcount FROM reviews WHERE volumeid = $1 GROUP BY username);`
 	return db.getReviewListStats(query, volumeID)
 }
 
