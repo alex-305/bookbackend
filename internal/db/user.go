@@ -3,14 +3,16 @@ package db
 import (
 	"errors"
 
+	"github.com/alex-305/bookbackend/internal/db/queries"
+	"github.com/alex-305/bookbackend/internal/db/scan"
 	"github.com/alex-305/bookbackend/internal/models"
 )
 
 func (db *DB) GetUser(userusername, username string) (models.User, error) {
-	row := db.QueryRow("SELECT u.username, u.email, u.description, u.join_date, u.followercount, u.followingcount, CASE WHEN ufu.follower IS NOT NULL THEN TRUE ELSE FALSE END AS isfollowing FROM users u LEFT JOIN user_follows_user ufu ON u.username=ufu.followed AND ufu.follower=$1 WHERE username = $2", userusername, username)
+	query := queries.GetUser()
+	row := db.QueryRow(query, userusername, username)
 
-	var user models.User
-	err := row.Scan(&user.Username, &user.Email, &user.Description, &user.Join_date, &user.FollowerCount, &user.IsFollowing)
+	user, err := scan.User(row)
 
 	if err != nil {
 		return models.User{}, err

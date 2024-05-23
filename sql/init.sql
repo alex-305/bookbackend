@@ -33,7 +33,7 @@ $$ LANGUAGE plpgsql;
 CREATE TABLE users (
     username VARCHAR(30) NOT NULL CHECK (username = LOWER(username)),
     password CHAR(60) NOT NULL,
-    email VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
     description VARCHAR(500) NOT NULL DEFAULT '',
     join_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     followercount BIGINT NOT NULL DEFAULT 0,
