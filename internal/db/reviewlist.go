@@ -23,7 +23,7 @@ func (db DB) GetFollowingReviewList(username string, o models.ReviewSortOptions)
 	rows, err := db.Query(q, username)
 	defer rows.Close()
 	if err != nil {
-		log.Printf("%s", err)
+		log.Printf("query:%s \n%s", q, err)
 		return []models.Review{}, err
 	}
 

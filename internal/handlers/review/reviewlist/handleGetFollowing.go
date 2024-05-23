@@ -2,6 +2,7 @@ package reviewlist
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
 
 	"github.com/alex-305/bookbackend/internal/db"
@@ -13,6 +14,7 @@ func HandleGetFollowing(w http.ResponseWriter, r *http.Request, d *db.DB) {
 	tok, err := helpers.GetToken(r)
 
 	if err != nil {
+		log.Printf("%s", err)
 		http.Error(w, "Could not retrieve JWT token", http.StatusUnauthorized)
 		return
 	}
@@ -22,6 +24,7 @@ func HandleGetFollowing(w http.ResponseWriter, r *http.Request, d *db.DB) {
 	reviews, err := reviewlistsvc.GetFollowing(tok, o, d)
 
 	if err != nil {
+		log.Printf("%s", err)
 		http.Error(w, "Could not get following review list", http.StatusBadRequest)
 		return
 	}
@@ -29,6 +32,7 @@ func HandleGetFollowing(w http.ResponseWriter, r *http.Request, d *db.DB) {
 	reviewJSON, err := json.Marshal(reviews)
 
 	if err != nil {
+		log.Printf("%s", err)
 		http.Error(w, "Could not marshal json for response", http.StatusInternalServerError)
 		return
 	}
