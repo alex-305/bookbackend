@@ -6,6 +6,14 @@ import (
 	"github.com/alex-305/bookbackend/internal/models"
 )
 
-func ListFormat(query string, o models.SortOptions) string {
-	return query + fmt.Sprintf(` ORDER BY %s %s LIMIT %d OFFSET %d`, o.GetBy(), o.GetDirection(), o.GetLimit(), o.GetPage()*o.GetLimit())
+func ListFormat(o models.SortOptions) string {
+	return orderby(o) + paginate(o)
+}
+
+func orderby(o models.SortOptions) string {
+	return fmt.Sprintf(` ORDER BY %s %s`, o.GetBy(), o.GetDirection())
+}
+
+func paginate(o models.SortOptions) string {
+	return fmt.Sprintf(` LIMIT %d OFFSET %d`, o.GetLimit(), o.GetPage()*o.GetLimit())
 }

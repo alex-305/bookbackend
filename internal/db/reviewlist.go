@@ -18,15 +18,14 @@ func (db DB) GetBookReviewList(username string, volumeID string, o models.Review
 }
 
 // func (db DB) GetFollowingReviewList(userusername, username string) ([]models.Review, error) {
-// 	q := `SELECT uf1.follower FROM user_follows_user AS uf1 lEFT JOIN user_follows_user AS uf2 ON uf1.follower=uf2.followed AND uf2.follower=$1 WHERE uf1.followed=$2 ORDER BY uf2.follower IS NULL, uf1.follower`
-// 	q2 := `SELECT * FROM user_follows_user WHERE followed='ted' ORDER BY followdate`
+//
 // 	return []models.Review{}, nil
 // }
 
 func (db DB) getReviewList(username string, o models.ReviewSortOptions, ap models.AttributeParam) ([]models.Review, error) {
 
 	q := queries.GetReview(ap)
-	q = helpers.ListFormat(q, o)
+	q += helpers.ListFormat(o)
 
 	rows, err := db.Query(q, username, ap.Param)
 

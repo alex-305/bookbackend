@@ -14,7 +14,7 @@ func (db *DB) GetReviewComments(username string, reviewid string, o models.Comme
 func (db *DB) getCommentList(username string, o models.CommentSortOptions, ap models.AttributeParam) ([]models.Comment, error) {
 	q := queries.GetComment(ap)
 
-	q = helpers.ListFormat(q, o)
+	q += helpers.ListFormat(o)
 
 	rows, err := db.Query(q, username, ap.Param)
 

@@ -44,6 +44,9 @@ func (s *APIServer) defineRoutes(r *mux.Router) {
 	//Follow Routes
 	r.HandleFunc("/user/{username}/follows", makeHttp(follow.HandlePost, s.DB)).Methods(http.MethodPost)
 	r.HandleFunc("/user/{username}/follows", makeHttp(follow.HandleDelete, s.DB)).Methods(http.MethodDelete)
+	//Follow List
+	r.HandleFunc("/user/{username}/following", makeHttp(follow.HandleGetFollowing, s.DB)).Methods(http.MethodGet)
+	r.HandleFunc("/user/{username}/followers", makeHttp(follow.HandleGetFollowers, s.DB)).Methods(http.MethodGet)
 	//Book Review List
 	//r.HandleFunc("/reviews/popular", makeHttp(reviewList.HandleGetPopular, s.DB)).Methods(http.MethodGet)
 	r.HandleFunc("/volume/{volumeid}/stats", makeHttp(reviewliststats.HandleGetBook, s.DB)).Methods(http.MethodGet)

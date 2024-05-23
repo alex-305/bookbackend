@@ -20,9 +20,11 @@ type CommentSortOptions struct {
 	Page      uint
 }
 
-type FollowOptions struct {
-	Limit uint
-	Page  uint
+type FollowSortOptions struct {
+	By        FollowSortBy
+	Direction SortDirection
+	Limit     uint
+	Page      uint
 }
 
 type ReviewSortBy string
@@ -38,6 +40,13 @@ type CommentSortBy string
 const (
 	ComLikes    CommentSortBy = "likecount"
 	ComPostDate CommentSortBy = "post_date"
+)
+
+type FollowSortBy string
+
+const (
+	Followed    FollowSortBy = "followed"
+	FolPostDate FollowSortBy = "uf1.followdate"
 )
 
 type SortDirection string
@@ -75,10 +84,22 @@ func ParseCommentSortBy(s string) CommentSortBy {
 	}
 }
 
+func ParseFollowSortBy(s string) FollowSortBy {
+	switch s {
+	case "followed":
+		return Followed
+	default:
+		return FolPostDate
+	}
+}
+
 func (o ReviewSortOptions) GetBy() string {
 	return string(o.By)
 }
 func (o CommentSortOptions) GetBy() string {
+	return string(o.By)
+}
+func (o FollowSortOptions) GetBy() string {
 	return string(o.By)
 }
 func (o ReviewSortOptions) GetDirection() string {
@@ -87,15 +108,24 @@ func (o ReviewSortOptions) GetDirection() string {
 func (o CommentSortOptions) GetDirection() string {
 	return string(o.Direction)
 }
+func (o FollowSortOptions) GetDirection() string {
+	return string(o.Direction)
+}
 func (o ReviewSortOptions) GetLimit() uint {
 	return uint(o.Limit)
 }
 func (o CommentSortOptions) GetLimit() uint {
 	return uint(o.Limit)
 }
+func (o FollowSortOptions) GetLimit() uint {
+	return uint(o.Limit)
+}
 func (o ReviewSortOptions) GetPage() uint {
 	return uint(o.Page)
 }
 func (o CommentSortOptions) GetPage() uint {
+	return uint(o.Page)
+}
+func (o FollowSortOptions) GetPage() uint {
 	return uint(o.Page)
 }
