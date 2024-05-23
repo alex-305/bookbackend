@@ -3,6 +3,8 @@ package db
 import (
 	"errors"
 
+	"github.com/alex-305/bookbackend/internal/db/queries"
+	"github.com/alex-305/bookbackend/internal/db/scan"
 	"github.com/alex-305/bookbackend/internal/models"
 )
 
@@ -27,4 +29,14 @@ func (db *DB) DeleteComment(cid string) error {
 		return err
 	}
 	return nil
+}
+
+func (db *DB) GetComment(username, cid string) (models.Comment, error) {
+	ap := models.NewAP("username", username)
+
+	query := queries.GetComment(ap)
+
+	result := db.QueryRow(query, ap.Param)
+
+	return scan.Comment(result)
 }

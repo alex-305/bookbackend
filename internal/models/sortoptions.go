@@ -20,10 +20,16 @@ type CommentSortOptions struct {
 	Page      uint
 }
 
+type FollowOptions struct {
+	Limit uint
+	Page  uint
+}
+
 type ReviewSortBy string
 
 const (
 	RevPostDate ReviewSortBy = "post_date"
+	RevLikes    ReviewSortBy = "likecount"
 	RevRating   ReviewSortBy = "rating"
 )
 
@@ -50,23 +56,23 @@ func ParseSortDirection(s string) SortDirection {
 }
 
 func ParseReviewSortBy(s string) ReviewSortBy {
-	by := RevPostDate
-
-	if s == "rating" {
-		by = RevRating
+	switch s {
+	case "rating":
+		return RevRating
+	case "likes":
+		return RevLikes
+	default:
+		return RevPostDate
 	}
-
-	return by
 }
 
 func ParseCommentSortBy(s string) CommentSortBy {
-	by := ComPostDate
-
-	if s == "likes" {
-		by = ComLikes
+	switch s {
+	case "likes":
+		return ComLikes
+	default:
+		return ComPostDate
 	}
-
-	return by
 }
 
 func (o ReviewSortOptions) GetBy() string {

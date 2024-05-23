@@ -4,23 +4,29 @@ import (
 	"log"
 
 	"github.com/alex-305/bookbackend/internal/db/helpers"
+	"github.com/alex-305/bookbackend/internal/db/queries"
+	"github.com/alex-305/bookbackend/internal/db/scan"
 	"github.com/alex-305/bookbackend/internal/models"
 )
 
 func (db DB) GetUserReviewList(userusername string, username string, o models.ReviewSortOptions) ([]models.Review, error) {
-	return db.GetReviewList(userusername, o, models.NewAP("username", username))
+	return db.getReviewList(userusername, o, models.NewAP("username", username))
 }
 
 func (db DB) GetBookReviewList(username string, volumeID string, o models.ReviewSortOptions) ([]models.Review, error) {
-	return db.GetReviewList(username, o, models.NewAP("volumeid", volumeID))
+	return db.getReviewList(username, o, models.NewAP("volumeid", volumeID))
 }
 
-func (db DB) GetReviewList(username string, o models.ReviewSortOptions, ap models.AttributeParam) ([]models.Review, error) {
+// func (db DB) GetFollowingReviewList(userusername, username string) ([]models.Review, error) {
+// 	q := `SELECT uf1.follower FROM user_follows_user AS uf1 lEFT JOIN user_follows_user AS uf2 ON uf1.follower=uf2.followed AND uf2.follower=$1 WHERE uf1.followed=$2 ORDER BY uf2.follower IS NULL, uf1.follower`
+// 	q2 := `SELECT * FROM user_follows_user WHERE followed='ted' ORDER BY followdate`
+// 	return []models.Review{}, nil
+// }
 
-	var reviewList []models.Review
-	q := `SELECT r.username, r.volumeid, r.reviewid, r.content, r.rating, r.post_date, r.likecount, CASE WHEN ulr.username IS NOT NULL THEN TRUE ELSE FALSE END AS isLiked FROM reviews r LEFT JOIN user_likes_review ulr ON r.reviewid=ulr.reviewid AND ulr.username=$1 WHERE r.` + ap.Attribute + `= $2`
+func (db DB) getReviewList(username string, o models.ReviewSortOptions, ap models.AttributeParam) ([]models.Review, error) {
 
-	q = helpers.Format(q, o)
+	q := queries.GetReview(ap)
+	q = helpers.ListFormat(q, o)
 
 	rows, err := db.Query(q, username, ap.Param)
 
@@ -31,17 +37,5 @@ func (db DB) GetReviewList(username string, o models.ReviewSortOptions, ap model
 		return []models.Review{}, err
 	}
 
-	for rows.Next() {
-		var review models.Review
-
-		err := rows.Scan(&review.Username, &review.VolumeID, &review.ReviewID, &review.Content, &review.Rating, &review.Post_date, &review.LikeCount, &review.IsLiked)
-
-		if err != nil {
-			return []models.Review{}, err
-		}
-
-		reviewList = append(reviewList, review)
-	}
-
-	return reviewList, nil
+	return scan.Reviews(rows)
 }

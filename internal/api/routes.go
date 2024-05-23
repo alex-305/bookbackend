@@ -53,6 +53,7 @@ func (s *APIServer) defineRoutes(r *mux.Router) {
 	r.HandleFunc("/review/{reviewid}/comments", makeHttp(commentlist.HandleGetReview, s.DB)).Methods(http.MethodGet)
 	r.HandleFunc("/review/{reviewid}/stats", makeHttp(reviewstats.HandleGet, s.DB)).Methods(http.MethodGet)
 	r.HandleFunc("/comment/{commentid}", makeHttp(comment.HandleDelete, s.DB)).Methods(http.MethodDelete)
+	r.HandleFunc("/comment/{commentid}", makeHttp(comment.HandleGet, s.DB)).Methods(http.MethodGet)
 	//Comment Like Routes
 	r.HandleFunc("/comment/{commentid}/likes", makeHttp(commentlikes.HandlePost, s.DB)).Methods(http.MethodPost)
 	r.HandleFunc("/comment/{commentid}/likes", makeHttp(commentlikes.HandleDelete, s.DB)).Methods(http.MethodDelete)
