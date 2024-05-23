@@ -17,10 +17,18 @@ func (db DB) GetBookReviewList(username string, volumeID string, o models.Review
 	return db.getReviewList(username, o, models.NewAP("volumeid", volumeID))
 }
 
-// func (db DB) GetFollowingReviewList(userusername, username string) ([]models.Review, error) {
-//
-// 	return []models.Review{}, nil
-// }
+func (db DB) GetFollowingReviewList(username string, o models.ReviewSortOptions) ([]models.Review, error) {
+	q := queries.GetFollowingReviews()
+	q += helpers.ListFormat(o)
+	rows, err := db.Query(q, username)
+	defer rows.Close()
+	if err != nil {
+		log.Printf("%s", err)
+		return []models.Review{}, err
+	}
+
+	return scan.Reviews(rows)
+}
 
 func (db DB) getReviewList(username string, o models.ReviewSortOptions, ap models.AttributeParam) ([]models.Review, error) {
 

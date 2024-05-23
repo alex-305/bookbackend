@@ -15,6 +15,7 @@ type Review struct {
 type ReviewListStats struct {
 	ReviewCount uint    `json:"reviewcount"`
 	AvgRating   float32 `json:"avgrating"`
+	VolumeID    string  `json:"volumeid"`
 }
 
 type ReviewStats struct {
