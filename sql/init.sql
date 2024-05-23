@@ -37,6 +37,7 @@ CREATE TABLE users (
     description VARCHAR(500) NOT NULL DEFAULT '',
     join_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     followercount BIGINT NOT NULL DEFAULT 0,
+    followingcount BIGINT NOT NULL DEFAULT 0,
     PRIMARY KEY(username)
 );
 

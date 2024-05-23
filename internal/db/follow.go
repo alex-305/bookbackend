@@ -11,6 +11,12 @@ func (db *DB) PostFollow(follower, followed string) error {
 	}
 
 	_, err = tx.Exec(`INSERT INTO user_follows_user(follower, followed) VALUES($1, $2)`, follower, followed)
+	if err != nil {
+		tx.Rollback()
+		return err
+	}
+
+	_, err = tx.Exec(`UPDATE users SET followingcount = followingCount+1 WHERE username=$1`, follower)
 
 	if err != nil {
 		tx.Rollback()
@@ -50,11 +56,19 @@ func (db *DB) DeleteFollow(follower, followed string) error {
 	}
 
 	if rowsAffected == 0 {
+		tx.Rollback()
 		return errors.New("could not unfollow")
 	}
 
 	_, err = tx.Exec(`UPDATE users SET followercount=followercount-1 WHERE username=$1`, followed)
 	if err != nil {
+		tx.Rollback()
+		return err
+	}
+
+	_, err = tx.Exec(`UPDATE users SET followingcount=followingcount-1 WHERE username=$1`, follower)
+	if err != nil {
+		tx.Rollback()
 		return err
 	}
 
