@@ -4,6 +4,9 @@ MINVALUE 238328;
 CREATE SEQUENCE comID
 START WITH 238328
 MINVALUE 238328;
+CREATE SEQUENCE uID
+START WITH 238328
+MINVALUE 238328;
 
 CREATE OR REPLACE FUNCTION genAlphaNum(num BIGINT)
 RETURNS VARCHAR(255) AS $$
@@ -31,20 +34,21 @@ END;
 $$ LANGUAGE plpgsql;
 
 CREATE TABLE users (
-    username VARCHAR(30) NOT NULL CHECK (username = LOWER(username)),
+    username VARCHAR(30) UNIQUE NOT NULL CHECK (username = LOWER(username)),
+    userID VARCHAR(20) NOT NULL DEFAULT genAlphaNum(NEXTVAL('uID')),
     password CHAR(60) NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
     description VARCHAR(500) NOT NULL DEFAULT '',
     join_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     followercount BIGINT NOT NULL DEFAULT 0,
     followingcount BIGINT NOT NULL DEFAULT 0,
-    PRIMARY KEY(username)
+    PRIMARY KEY(userID)
 );
 
 CREATE TABLE reviews (
-    username VARCHAR(30) NOT NULL,
+    userID VARCHAR(20) NOT NULL,
     volumeID VARCHAR(30) NOT NULL,
-    reviewID VARCHAR(20) DEFAULT genAlphaNum(NEXTVAL('revID')),
+    reviewID VARCHAR(20) NOT NULL DEFAULT genAlphaNum(NEXTVAL('revID')),
     content VARCHAR(3000) NOT NULL DEFAULT '',
     rating SMALLINT NOT NULL DEFAULT 0,
     post_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -52,7 +56,7 @@ CREATE TABLE reviews (
 
     --Constraints
     CONSTRAINT chk_rating_change CHECK (rating >= 0 AND rating <= 10),
-    CONSTRAINT fk_username FOREIGN KEY(username) REFERENCES users(username) ON DELETE CASCADE,
+    CONSTRAINT fk_userid FOREIGN KEY(userID) REFERENCES users(userID) ON DELETE CASCADE,
 
     PRIMARY KEY(reviewID)
 );
@@ -61,54 +65,54 @@ CREATE TABLE comments (
     reviewID VARCHAR(20) NOT NULL,
     commentID VARCHAR(20) NOT NULL DEFAULT genAlphaNum(NEXTVAL('comID')),
     content VARCHAR(1000) NOT NULL,
-    username VARCHAR(30) NOT NULL,
+    userID VARCHAR(20) NOT NULL,
     post_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     likecount BIGINT NOT NULL DEFAULT 0,
 
     --Constraints
     CONSTRAINT fk_reviewid FOREIGN KEY(reviewID) REFERENCES reviews(reviewID) ON DELETE CASCADE,
-    CONSTRAINT fk_username FOREIGN KEY(username) REFERENCES users(username) ON DELETE CASCADE,
+    CONSTRAINT fk_userid FOREIGN KEY(userID) REFERENCES users(userID) ON DELETE CASCADE,
 
     PRIMARY KEY(commentID)
 );
 
 CREATE TABLE user_likes_review (
-    username VARCHAR(30) NOT NULL,
-    likedate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    reviewID VARCHAR(20) NOT NULL,
+    userid VARCHAR(20) NOT NULL,
+    like_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    reviewid VARCHAR(20) NOT NULL,
 
     --Constraints
     CONSTRAINT fk_reviewid FOREIGN KEY(reviewID) REFERENCES reviews(reviewID) ON DELETE CASCADE,
-    CONSTRAINT fk_username FOREIGN KEY(username) REFERENCES users(username) ON DELETE CASCADE,
+    CONSTRAINT fk_userid FOREIGN KEY(userID) REFERENCES users(userID) ON DELETE CASCADE,
 
-    PRIMARY KEY(username, reviewID)
+    PRIMARY KEY(userID, reviewID)
 );
 
 CREATE TABLE user_likes_comment (
-    username VARCHAR(30) NOT NULL,
-    likedate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    commentID VARCHAR(20) NOT NULL,
+    userid VARCHAR(20) NOT NULL,
+    like_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    commentid VARCHAR(20) NOT NULL,
 
     --Constraints
     CONSTRAINT fk_commentID FOREIGN KEY(commentID) REFERENCES comments(commentID) ON DELETE CASCADE,
-    CONSTRAINT fk_username FOREIGN KEY(username) REFERENCES users(username) ON DELETE CASCADE,
+    CONSTRAINT fk_userid FOREIGN KEY(userID) REFERENCES users(userID) ON DELETE CASCADE,
 
-    PRIMARY KEY(username, commentID)
+    PRIMARY KEY(userID, commentID)
 );
 
 CREATE TABLE user_follows_user (
-    follower VARCHAR(30) NOT NULL,
-    followdate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    followed VARCHAR(30) NOT NULL,
+    followerid VARCHAR(20) NOT NULL,
+    follow_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    followedid VARCHAR(20) NOT NULL,
 
     --Constraints
-    CONSTRAINT fk_follower FOREIGN KEY(follower) REFERENCES users(username) ON DELETE CASCADE,
-    CONSTRAINT fk_followed FOREIGN KEY(followed) REFERENCES users(username) ON DELETE CASCADE,
-    CHECK (follower <>followed),
+    CONSTRAINT fk_follower FOREIGN KEY(followerID) REFERENCES users(userID) ON DELETE CASCADE,
+    CONSTRAINT fk_followed FOREIGN KEY(followedID) REFERENCES users(userID) ON DELETE CASCADE,
+    CHECK (followerID <> followedID),
 
-    PRIMARY KEY(follower, followed)
+    PRIMARY KEY(followerID, followedID)
 );
 
 --Indexes
 CREATE INDEX VolumeReviewIndex ON reviews(volumeID);
-CREATE INDEX UserReviewIndex ON reviews(username);
+CREATE INDEX UserReviewIndex ON reviews(userID);

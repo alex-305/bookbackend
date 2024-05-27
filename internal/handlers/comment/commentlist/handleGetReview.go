@@ -7,13 +7,14 @@ import (
 
 	"github.com/alex-305/bookbackend/internal/db"
 	"github.com/alex-305/bookbackend/internal/handlers/helpers"
+	"github.com/alex-305/bookbackend/internal/models"
 	"github.com/alex-305/bookbackend/internal/services/commentsvc/commentlistsvc"
 	"github.com/gorilla/mux"
 )
 
 func HandleGetReview(w http.ResponseWriter, r *http.Request, d *db.DB) {
 	vars := mux.Vars(r)
-	reviewid := vars["reviewid"]
+	reviewid := models.ReviewID(vars["reviewid"])
 
 	tok, _ := helpers.GetToken(r)
 

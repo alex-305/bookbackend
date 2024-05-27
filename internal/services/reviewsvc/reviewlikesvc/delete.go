@@ -6,12 +6,15 @@ import (
 	"github.com/alex-305/bookbackend/internal/models"
 )
 
-func Delete(reviewid string, tok models.Token, db *db.DB) error {
+func Delete(reviewid models.ReviewID, tok models.Token, db *db.DB) error {
 	username, err := token.Validate(tok)
 	if err != nil {
 		return err
 	}
-	err = db.DeleteReviewLikes(username, reviewid)
+
+	userID, err := db.GetUserID(username)
+
+	err = db.DeleteReviewLikes(userID, reviewid)
 
 	if err != nil {
 		return err

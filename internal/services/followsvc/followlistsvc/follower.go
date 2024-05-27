@@ -6,7 +6,21 @@ import (
 	"github.com/alex-305/bookbackend/internal/models"
 )
 
-func Follower(username string, tok models.Token, o models.FollowSortOptions, db *db.DB) ([]models.UserFollow, error) {
+func Follower(username models.Username, tok models.Token, o models.FollowSortOptions, db *db.DB) ([]models.UserFollow, error) {
 	userusername, _ := token.Validate(tok)
-	return db.GetFollowerList(userusername, username, o)
+	useruserid, err := db.GetUserID(userusername)
+	if err != nil {
+		return []models.UserFollow{}, err
+	}
+	userid, err := db.GetUserID(username)
+	if err != nil {
+		return []models.UserFollow{}, err
+	}
+	followerList, err := db.GetFollowerList(useruserid, userid, o)
+
+	if err != nil {
+		return []models.UserFollow{}, err
+	}
+
+	return followerList, nil
 }

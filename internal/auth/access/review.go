@@ -5,13 +5,13 @@ import (
 	"github.com/alex-305/bookbackend/internal/models"
 )
 
-func Review(username, reviewid string, db *db.DB) error {
+func Review(userID models.UserID, reviewid models.ReviewID, db *db.DB) error {
 	var review models.Review
-	review, err := db.GetReview(username, reviewid)
+	review, err := db.GetReview(userID, reviewid)
 
 	if err != nil {
 		return err
 	}
 
-	return HasOwnershipAccess(username, review.Username)
+	return HasOwnershipAccess(userID, review.UserID)
 }

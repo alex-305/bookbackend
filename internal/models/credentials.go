@@ -1,7 +1,7 @@
 package models
 
 type Credentials struct {
-	Username string `json:"username"`
-	Password string `json:"password"`
-	Email    string `json:"email"`
+	Username Username `json:"username" gorm:"username"`
+	Password string   `json:"password" gorm:"password"`
+	Email    string   `json:"email" gorm:"email"`
 }

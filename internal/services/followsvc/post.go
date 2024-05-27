@@ -6,14 +6,26 @@ import (
 	"github.com/alex-305/bookbackend/internal/models"
 )
 
-func PostFollow(followed string, tok models.Token, d *db.DB) error {
+func PostFollow(followed models.Username, tok models.Token, db *db.DB) error {
 	follower, err := token.Validate(tok)
 
 	if err != nil {
 		return err
 	}
 
-	err = d.PostFollow(follower, followed)
+	followerID, err := db.GetUserID(follower)
+
+	if err != nil {
+		return err
+	}
+
+	followedID, err := db.GetUserID(followed)
+
+	if err != nil {
+		return err
+	}
+
+	err = db.PostFollow(followerID, followedID)
 
 	if err != nil {
 		return err

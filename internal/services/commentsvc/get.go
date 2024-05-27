@@ -6,10 +6,23 @@ import (
 	"github.com/alex-305/bookbackend/internal/models"
 )
 
-func Get(commentid string, tok models.Token, d *db.DB) (models.Comment, error) {
+func Get(commentid models.CommentID, tok models.Token, d *db.DB) (models.Comment, error) {
 	username, err := token.Validate(tok)
 	if err != nil {
 		return models.Comment{}, err
 	}
-	return d.GetComment(username, commentid)
+
+	userid, err := d.GetUserID(username)
+
+	if err != nil {
+		return models.Comment{}, err
+	}
+
+	comment, err := d.GetComment(userid, commentid)
+
+	if err != nil {
+		return models.Comment{}, err
+	}
+
+	return comment, nil
 }

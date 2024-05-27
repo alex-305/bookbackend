@@ -1,21 +1,19 @@
 package db
 
-func (db DB) UpdateUserDescription(username, description string) error {
-	query := `UPDATE users SET description = $1 WHERE username = $2`
-	_, err := db.Exec(query, description, username)
+import "github.com/alex-305/bookbackend/internal/models"
 
+func (db DB) UpdateUserDescription(userID models.UserID, description string) error {
+	err := db.Model(&models.User{}).Where("userID = ?", userID).Update("description", description).Error
 	if err != nil {
 		return err
 	}
-	return nil
+	return err
 }
 
-func (db DB) UpdateUserPassword(username, password string) error {
-	query := `UPDATE users SET password = $1 WHERE username = $2`
-	_, err := db.Exec(query, password, username)
-
+func (db DB) UpdateUserPassword(userID models.UserID, password string) error {
+	err := db.Model(&models.User{}).Where("userID = ?", userID).Update("password", password).Error
 	if err != nil {
 		return err
 	}
-	return nil
+	return err
 }

@@ -5,14 +5,21 @@ import (
 	"net/http"
 
 	"github.com/alex-305/bookbackend/internal/db"
+	"github.com/alex-305/bookbackend/internal/models"
+	"github.com/alex-305/bookbackend/internal/services/reviewsvc/reviewlistsvc/reviewliststatssvc"
 	"github.com/gorilla/mux"
 )
 
 func HandleGetStats(w http.ResponseWriter, r *http.Request, db *db.DB) {
 	vars := mux.Vars(r)
-	username := vars["username"]
+	username := models.Username(vars["username"])
 
-	stats := db.GetUserReviewStats(username)
+	stats, err := reviewliststatssvc.GetUserStats(username, db)
+
+	if err != nil {
+		http.Error(w, "Could not get user review stats", http.StatusBadRequest)
+		return
+	}
 
 	response, err := json.Marshal(stats)
 

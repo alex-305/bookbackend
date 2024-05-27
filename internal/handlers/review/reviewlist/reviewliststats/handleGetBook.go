@@ -5,13 +5,14 @@ import (
 	"net/http"
 
 	"github.com/alex-305/bookbackend/internal/db"
+	"github.com/alex-305/bookbackend/internal/models"
 	"github.com/alex-305/bookbackend/internal/services/reviewsvc/reviewlistsvc/reviewliststatssvc"
 	"github.com/gorilla/mux"
 )
 
 func HandleGetBook(w http.ResponseWriter, r *http.Request, d *db.DB) {
 	vars := mux.Vars(r)
-	volumeid := vars["volumeid"]
+	volumeid := models.VolumeID(vars["volumeid"])
 
 	bs, err := reviewliststatssvc.GetBook(volumeid, d)
 

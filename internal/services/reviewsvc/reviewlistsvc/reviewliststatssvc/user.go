@@ -5,6 +5,18 @@ import (
 	"github.com/alex-305/bookbackend/internal/models"
 )
 
-func GetUser(username string, d *db.DB) (models.ReviewListStats, error) {
-	return d.GetUserReviewStats(username), nil
+func GetUserStats(username models.Username, db *db.DB) (models.ReviewListStats, error) {
+	userID, err := db.GetUserID(username)
+
+	if err != nil {
+		return models.ReviewListStats{}, err
+	}
+
+	rs, err := db.GetUserReviewListStats(userID)
+
+	if err != nil {
+		return models.ReviewListStats{}, err
+	}
+
+	return rs, nil
 }

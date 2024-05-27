@@ -6,14 +6,20 @@ import (
 	"github.com/alex-305/bookbackend/internal/models"
 )
 
-func Delete(commentid string, tok models.Token, db *db.DB) error {
+func Delete(commentID models.CommentID, tok models.Token, db *db.DB) error {
 	username, err := token.Validate(tok)
 
 	if err != nil {
 		return err
 	}
 
-	err = db.DeleteCommentLikes(username, commentid)
+	userID, err := db.GetUserID(username)
+
+	if err != nil {
+		return err
+	}
+
+	err = db.DeleteCommentLikes(userID, commentID)
 
 	if err != nil {
 		return err

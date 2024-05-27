@@ -1,60 +1,59 @@
 package db
 
-import "errors"
+import (
+	"errors"
 
-func (db DB) PostReviewLikes(user, reviewid string) error {
-	tx, err := db.Begin()
-	if err != nil {
-		return err
+	"github.com/alex-305/bookbackend/internal/db/queries"
+	"github.com/alex-305/bookbackend/internal/models"
+	"github.com/alex-305/bookbackend/internal/models/tables"
+)
+
+func (db DB) PostReviewLikes(userID models.UserID, reviewid models.ReviewID) error {
+	tx := db.Begin()
+
+	newLike := tables.User_likes_review{
+		UserID:   userID,
+		ReviewID: reviewid,
 	}
-	_, err = tx.Exec(`UPDATE reviews SET likecount = likecount+1 WHERE reviewid = $1`, reviewid)
 
-	if err != nil {
+	result := tx.Create(&newLike)
+
+	if result.Error != nil {
 		tx.Rollback()
-		return err
+		return result.Error
 	}
 
-	_, err = tx.Exec(`INSERT INTO user_likes_review(username, reviewid) VALUES($1,$2)`, user, reviewid)
+	result = queries.ChangeReviewLikeCount(reviewid, tx, 1)
 
-	if err != nil {
+	if result.Error != nil {
 		tx.Rollback()
-		return err
+		return result.Error
 	}
 	tx.Commit()
-	return err
+
+	return nil
 }
 
-func (db DB) DeleteReviewLikes(user, reviewid string) error {
-	tx, err := db.Begin()
-	if err != nil {
-		return err
-	}
-	_, err = tx.Exec(`UPDATE reviews SET likecount = likecount-1 WHERE reviewid = $1`, reviewid)
+func (db DB) DeleteReviewLikes(userID models.UserID, reviewid models.ReviewID) error {
+	tx := db.Begin()
+	result := tx.Delete(&tables.User_likes_comment{}, "userid=? AND reviewid=?", userID, reviewid)
 
-	if err != nil {
+	if result.Error != nil {
 		tx.Rollback()
-		return err
+		return result.Error
 	}
-
-	result, err := tx.Exec(`DELETE FROM user_likes_review WHERE username = $1 AND reviewid = $2`, user, reviewid)
-
-	if err != nil {
-		tx.Rollback()
-		return err
-	}
-
-	rowsAffected, err := result.RowsAffected()
-
-	if err != nil {
-		tx.Rollback()
-		return err
-	}
-
-	if rowsAffected == 0 {
+	if result.RowsAffected == 0 {
 		tx.Rollback()
 		return errors.New("could not delete from user_likes_review")
 	}
 
+	result = queries.ChangeReviewLikeCount(reviewid, tx, -1)
+
+	if result.Error != nil {
+		tx.Rollback()
+		return result.Error
+	}
+
 	tx.Commit()
-	return err
+	return nil
 }

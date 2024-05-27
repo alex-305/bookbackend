@@ -6,7 +6,21 @@ import (
 	"github.com/alex-305/bookbackend/internal/models"
 )
 
-func Get(username string, tok models.Token, db *db.DB) (models.User, error) {
-	userusername, _ := token.Validate(tok)
-	return db.GetUser(userusername, username)
+func Get(username models.Username, tok models.Token, db *db.DB) (models.User, error) {
+	userusername, err := token.Validate(tok)
+
+	var useruserid models.UserID
+	if err == nil {
+		useruserid, _ = db.GetUserID(userusername)
+	}
+
+	userid, err := db.GetUserID(username)
+
+	user, err := db.GetUser(useruserid, userid)
+
+	if err != nil {
+		return models.User{}, err
+	}
+
+	return user, nil
 }

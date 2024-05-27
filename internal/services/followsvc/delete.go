@@ -6,14 +6,26 @@ import (
 	"github.com/alex-305/bookbackend/internal/models"
 )
 
-func DeleteFollow(followed string, tok models.Token, d *db.DB) error {
+func DeleteFollow(followed models.Username, tok models.Token, db *db.DB) error {
 	follower, err := token.Validate(tok)
 
 	if err != nil {
 		return err
 	}
 
-	err = d.DeleteFollow(follower, followed)
+	followedID, err := db.GetUserID(followed)
+
+	if err != nil {
+		return err
+	}
+
+	followerID, err := db.GetUserID(follower)
+
+	if err != nil {
+		return err
+	}
+
+	err = db.DeleteFollow(followerID, followedID)
 
 	if err != nil {
 		return err

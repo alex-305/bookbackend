@@ -6,13 +6,14 @@ import (
 
 	"github.com/alex-305/bookbackend/internal/db"
 	"github.com/alex-305/bookbackend/internal/handlers/helpers"
+	"github.com/alex-305/bookbackend/internal/models"
 	"github.com/alex-305/bookbackend/internal/services/reviewsvc/reviewlistsvc"
 	"github.com/gorilla/mux"
 )
 
 func HandleGetBook(w http.ResponseWriter, r *http.Request, d *db.DB) {
 	vars := mux.Vars(r)
-	volumeid := vars["volumeid"]
+	volumeid := models.VolumeID(vars["volumeid"])
 
 	options := getOptions(r)
 

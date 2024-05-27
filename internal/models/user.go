@@ -1,13 +1,29 @@
 package models
 
-import "time"
+import (
+	"time"
+)
 
 type User struct {
+	UserID         UserID    `json:"-" gorm:"primaryKey;column:userid"`
 	Username       string    `json:"username"`
-	Email          string    `json:"email"`
+	Password       string    `json:"-"`
+	Email          string    `json:"email" gorm:"unique;not null"`
 	Description    string    `json:"description"`
-	Join_date      time.Time `json:"join_date"`
-	FollowerCount  uint      `json:"followercount"`
-	FollowingCount uint      `json:"followingcount"`
-	IsFollowing    bool      `json:"isfollowing"`
+	Join_date      time.Time `json:"join_date" gorm:"autoCreateTime"`
+	FollowerCount  uint      `json:"followercount" column:"followercount"`
+	FollowingCount uint      `json:"followingcount" column:"followingcount"`
+	IsFollowing    bool      `json:"isfollowing" gorm:"-"`
 }
+
+func CredsToUser(creds Credentials) User {
+	return User{
+		Username: string(creds.Username),
+		Password: creds.Password,
+		Email:    creds.Email,
+	}
+}
+
+type UserID string
+
+type Username string

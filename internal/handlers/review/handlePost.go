@@ -12,10 +12,6 @@ import (
 )
 
 func HandlePost(w http.ResponseWriter, r *http.Request, db *db.DB) {
-	if r.Method != http.MethodPost {
-		http.Error(w, "Method not allowed", http.StatusBadRequest)
-		return
-	}
 	tok, err := helpers.GetToken(r)
 
 	if err != nil {
@@ -40,7 +36,7 @@ func HandlePost(w http.ResponseWriter, r *http.Request, db *db.DB) {
 		return
 	}
 
-	reviewIDJSON := map[string]string{"reviewid": reviewid}
+	reviewIDJSON := map[string]models.ReviewID{"reviewid": reviewid}
 	response, err := json.Marshal(reviewIDJSON)
 
 	if err != nil {

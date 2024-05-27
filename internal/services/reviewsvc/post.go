@@ -8,16 +8,17 @@ import (
 	"github.com/alex-305/bookbackend/internal/models"
 )
 
-func Post(rev models.Review, tok models.Token, d *db.DB) (string, error) {
+func Post(rev models.Review, tok models.Token, d *db.DB) (models.ReviewID, error) {
 	username, err := token.Validate(tok)
 
-	log.Printf("user:%s", username)
-
 	if err != nil {
+		log.Printf("%s", err)
 		return "", err
 	}
 
-	reviewid, err := d.PostReview(username, rev)
+	userID, err := d.GetUserID(username)
+
+	reviewid, err := d.PostReview(userID, rev)
 
 	if err != nil {
 		log.Printf("%s", err)

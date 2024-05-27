@@ -9,20 +9,26 @@ import (
 	"github.com/alex-305/bookbackend/internal/models"
 )
 
-func Put(reviewid string, rev models.Review, tok models.Token, d *db.DB) error {
+func Put(reviewid models.ReviewID, rev models.Review, tok models.Token, d *db.DB) error {
 	username, err := token.Validate(tok)
 
 	if err != nil {
 		return err
 	}
 
-	reviewToUpdate, err := d.GetReview(username, reviewid)
+	userID, err := d.GetUserID(username)
 
 	if err != nil {
 		return err
 	}
 
-	err = access.HasOwnershipAccess(username, reviewToUpdate.Username)
+	reviewToUpdate, err := d.GetReview(userID, reviewid)
+
+	if err != nil {
+		return err
+	}
+
+	err = access.HasOwnershipAccess(userID, reviewToUpdate.UserID)
 
 	if err != nil {
 		return errors.New("unauthorized")

@@ -6,6 +6,7 @@ import (
 
 	"github.com/alex-305/bookbackend/internal/db"
 	"github.com/alex-305/bookbackend/internal/handlers/helpers"
+	"github.com/alex-305/bookbackend/internal/models"
 	"github.com/alex-305/bookbackend/internal/services/usersvc"
 	"github.com/gorilla/mux"
 )
@@ -15,13 +16,8 @@ type desc struct {
 }
 
 func HandlePatchDesc(w http.ResponseWriter, r *http.Request, db *db.DB) {
-	if r.Method != http.MethodPatch {
-		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
-		return
-	}
-
 	vars := mux.Vars(r)
-	username := vars["username"]
+	username := models.Username(vars["username"])
 
 	tok, err := helpers.GetToken(r)
 

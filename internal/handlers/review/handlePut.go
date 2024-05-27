@@ -13,7 +13,7 @@ import (
 
 func HandlePut(w http.ResponseWriter, r *http.Request, d *db.DB) {
 	vars := mux.Vars(r)
-	reviewid := vars["reviewid"]
+	reviewid := models.ReviewID(vars["reviewid"])
 
 	tok, err := helpers.GetToken(r)
 

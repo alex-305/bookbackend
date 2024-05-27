@@ -7,18 +7,14 @@ import (
 
 	"github.com/alex-305/bookbackend/internal/db"
 	"github.com/alex-305/bookbackend/internal/handlers/helpers"
+	"github.com/alex-305/bookbackend/internal/models"
 	"github.com/alex-305/bookbackend/internal/services/reviewsvc"
 	"github.com/gorilla/mux"
 )
 
 func HandleGet(w http.ResponseWriter, r *http.Request, d *db.DB) {
-	if r.Method != http.MethodGet {
-		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
-		return
-	}
-
 	vars := mux.Vars(r)
-	reviewid := vars["reviewid"]
+	reviewid := models.ReviewID(vars["reviewid"])
 
 	tok, _ := helpers.GetToken(r)
 

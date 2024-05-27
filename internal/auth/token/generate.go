@@ -15,7 +15,7 @@ type Claims struct {
 	Username string
 }
 
-func Generate(username string) (models.Token, error) {
+func Generate(username models.Username) (models.Token, error) {
 	token := jwt.New(jwt.SigningMethodHS256)
 	claims, ok := token.Claims.(jwt.MapClaims)
 

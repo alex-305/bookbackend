@@ -6,14 +6,20 @@ import (
 	"github.com/alex-305/bookbackend/internal/models"
 )
 
-func Post(reviewid string, tok models.Token, db *db.DB) error {
+func Post(reviewid models.ReviewID, tok models.Token, db *db.DB) error {
 	username, err := token.Validate(tok)
 
 	if err != nil {
 		return err
 	}
 
-	err = db.PostReviewLikes(username, reviewid)
+	userID, err := db.GetUserID(username)
+
+	if err != nil {
+		return err
+	}
+
+	err = db.PostReviewLikes(userID, reviewid)
 
 	if err != nil {
 		return err

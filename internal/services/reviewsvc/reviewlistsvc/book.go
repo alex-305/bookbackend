@@ -6,7 +6,14 @@ import (
 	"github.com/alex-305/bookbackend/internal/models"
 )
 
-func GetBook(volumeid string, tok models.Token, o models.ReviewSortOptions, db *db.DB) ([]models.Review, error) {
+func GetBook(volumeid models.VolumeID, tok models.Token, o models.ReviewSortOptions, db *db.DB) ([]models.Review, error) {
 	username, _ := token.Validate(tok)
-	return db.GetBookReviewList(username, volumeid, o)
+	userid, _ := db.GetUserID(username)
+
+	reviews, err := db.GetBookReviewList(userid, volumeid, o)
+
+	if err != nil {
+		return []models.Review{}, err
+	}
+	return reviews, nil
 }

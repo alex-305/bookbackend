@@ -2,41 +2,53 @@ package db
 
 import (
 	"errors"
+	"log"
 
 	"github.com/alex-305/bookbackend/internal/db/queries"
-	"github.com/alex-305/bookbackend/internal/db/scan"
 	"github.com/alex-305/bookbackend/internal/models"
 )
 
-func (db *DB) PostComment(r models.Comment) (string, error) {
-	if r.Content == "" {
+func (db *DB) PostComment(c models.Comment) (models.CommentID, error) {
+	if c.Content == "" {
 		return "", errors.New("content cannot be empty")
 	}
-	query := `INSERT into comments(username, reviewID, content) VALUES($1, $2, $3) RETURNING commentid`
-	var commentid string
-	err := db.QueryRow(query, r.Username, r.ReviewID, r.Content).Scan(&commentid)
-
-	if err != nil {
-		return "", err
+	newComment := models.Comment{
+		Content:  c.Content,
+		ReviewID: c.ReviewID,
+		UserID:   c.UserID,
 	}
-	return commentid, nil
+	result := db.Create(&newComment)
+
+	if result.Error != nil {
+		log.Printf("%s", result.Error)
+		return "", result.Error
+	}
+
+	return newComment.CommentID, nil
 }
 
-func (db *DB) DeleteComment(cid string) error {
-	_, err := db.Exec(`DELETE FROM comments WHERE commentid=$1`, cid)
-
-	if err != nil {
-		return err
+func (db *DB) DeleteComment(commentid models.CommentID) error {
+	var comments []models.Comment
+	result := db.Delete(&comments, commentid)
+	if result.Error != nil {
+		return result.Error
 	}
 	return nil
 }
 
-func (db *DB) GetComment(username, cid string) (models.Comment, error) {
-	ap := models.NewAP("username", username)
+func (db *DB) GetComment(userID models.UserID, commentID models.CommentID) (models.Comment, error) {
+	var comment models.Comment
 
-	query := queries.GetComment(ap)
+	result :=
+		db.Table(queries.FromComment()).
+			Select(queries.SelectComment()).
+			Joins(queries.JoinCommentLikes(), userID).
+			//Joins(queries.JoinForUsername(queries.CommentTableName())).
+			Where("c.commentid = ?", commentID).
+			Scan(&comment)
+	if result.Error != nil {
+		return models.Comment{}, result.Error
+	}
 
-	result := db.QueryRow(query, ap.Param)
-
-	return scan.Comment(result)
+	return comment, nil
 }

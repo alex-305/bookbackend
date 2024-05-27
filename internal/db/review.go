@@ -1,39 +1,45 @@
 package db
 
 import (
+	"github.com/alex-305/bookbackend/internal/db/queries"
 	"github.com/alex-305/bookbackend/internal/models"
 )
 
-func (db *DB) PostReview(username string, rev models.Review) (string, error) {
-	query := `INSERT INTO reviews(username, volumeid, content, rating) VALUES($1, $2, $3, $4) RETURNING reviewID;`
+func (db *DB) PostReview(userID models.UserID, rev models.Review) (models.ReviewID, error) {
+	newReview := models.Review{
+		Content: rev.Content,
+		Rating:  rev.Rating,
+		UserID:  userID,
+	}
 
-	var reviewid string
-	err := db.QueryRow(query, username, rev.VolumeID, rev.Content, rev.Rating).Scan(&reviewid)
+	err := db.Create(&newReview).Error
 
 	if err != nil {
 		return "", err
 	}
 
-	return reviewid, nil
+	return newReview.ReviewID, nil
 }
 
-func (db *DB) DeleteReview(reviewid string) error {
-	query := `DELETE FROM reviews WHERE reviewID=$1`
-	_, err := db.Exec(query, reviewid)
-
+func (db *DB) DeleteReview(reviewid models.ReviewID) error {
+	var reviews []models.Review
+	err := db.Delete(&reviews, reviewid).Error
 	if err != nil {
 		return err
 	}
-
 	return nil
 }
 
-func (db *DB) GetReview(username, reviewid string) (models.Review, error) {
-	query := `SELECT r.username, r.volumeid, r.reviewid, r.content, r.rating, r.post_date, r.likecount,
-	CASE WHEN ulr.username IS NOT NULL THEN TRUE ELSE FALSE END AS isLiked FROM reviews r LEFT JOIN user_likes_review ulr ON r.reviewid=ulr.reviewid AND ulr.username=$1 WHERE r.reviewid = $2`
-
+func (db *DB) GetReview(userid models.UserID, reviewid models.ReviewID) (models.Review, error) {
 	var rev models.Review
-	err := db.QueryRow(query, username, reviewid).Scan(&rev.Username, &rev.VolumeID, &rev.ReviewID, &rev.Content, &rev.Rating, &rev.Post_date, &rev.LikeCount, &rev.IsLiked)
+	err := db.Table("reviews r").
+		Select(`r.userid, r.volumeid, r.reviewid, r.content, r.rating, r.post_date, r.likecount,
+	CASE WHEN ulr.userid IS NOT NULL THEN TRUE ELSE FALSE END AS isLiked`).
+		Joins(queries.JoinReviewLikes(), userid).
+		//Joins(queries.JoinForUsername(queries.ReviewTableName())).
+		Where("r.reviewid = ?", reviewid).
+		Scan(&rev).
+		Error
 
 	if err != nil {
 		return models.Review{}, err
@@ -42,12 +48,14 @@ func (db *DB) GetReview(username, reviewid string) (models.Review, error) {
 	return rev, nil
 }
 
-func (db *DB) UpdateReview(reviewid string, r models.Review) error {
-	query := `UPDATE reviews SET content = $1, rating = $2 WHERE reviewid = $3`
-	_, err := db.Exec(query, r.Content, r.Rating, reviewid)
-
+func (db *DB) UpdateReview(reviewid models.ReviewID, r models.Review) error {
+	updates := map[string]interface{}{
+		"Content": r.Content,
+		"Rating":  r.Rating,
+	}
+	err := db.Model(&models.Review{}).Where("reviewid = ?", reviewid).Updates(updates).Error
 	if err != nil {
 		return err
 	}
-	return nil
+	return err
 }

@@ -5,15 +5,16 @@ import (
 	"net/http"
 
 	"github.com/alex-305/bookbackend/internal/db"
+	"github.com/alex-305/bookbackend/internal/models"
 	"github.com/alex-305/bookbackend/internal/services/reviewsvc/reviewlistsvc/reviewliststatssvc"
 	"github.com/gorilla/mux"
 )
 
 func HandleGetUser(w http.ResponseWriter, r *http.Request, d *db.DB) {
 	vars := mux.Vars(r)
-	username := vars["username"]
+	username := models.Username(vars["username"])
 
-	bs, err := reviewliststatssvc.GetUser(username, d)
+	bs, err := reviewliststatssvc.GetUserStats(username, d)
 
 	if err != nil {
 		http.Error(w, "Could not retrieve stats", http.StatusNotFound)

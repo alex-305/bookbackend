@@ -17,7 +17,7 @@ func HandlePost(w http.ResponseWriter, r *http.Request, d *db.DB) {
 	var c models.Comment
 
 	vars := mux.Vars(r)
-	c.ReviewID = vars["reviewid"]
+	c.ReviewID = models.ReviewID(vars["reviewid"])
 
 	tok, err := helpers.GetToken(r)
 
@@ -41,7 +41,7 @@ func HandlePost(w http.ResponseWriter, r *http.Request, d *db.DB) {
 		return
 	}
 
-	commentidJSON := map[string]string{"commentid": commentid}
+	commentidJSON := map[string]models.CommentID{"commentid": commentid}
 	response, err := json.Marshal(commentidJSON)
 
 	if err != nil {

@@ -2,6 +2,8 @@ package helpers
 
 import (
 	"regexp"
+
+	"github.com/alex-305/bookbackend/internal/models"
 )
 
 func sanitize(s, rgx string) string {
@@ -18,8 +20,8 @@ func validate(s, rgx string) bool {
 	return regex.MatchString(s)
 }
 
-func ValidateUsername(username string) bool {
-	return validate(username, "^[a-zA-Z0-9_.]*$")
+func ValidateUsername(username models.Username) bool {
+	return validate(string(username), "^[a-zA-Z0-9_.]*$")
 }
 
 func ValidateEmail(email string) bool {

@@ -5,13 +5,14 @@ import (
 
 	"github.com/alex-305/bookbackend/internal/db"
 	"github.com/alex-305/bookbackend/internal/handlers/helpers"
+	"github.com/alex-305/bookbackend/internal/models"
 	"github.com/alex-305/bookbackend/internal/services/followsvc"
 	"github.com/gorilla/mux"
 )
 
 func HandleDelete(w http.ResponseWriter, r *http.Request, d *db.DB) {
 	vars := mux.Vars(r)
-	username := vars["username"]
+	username := models.Username(vars["username"])
 	tok, err := helpers.GetToken(r)
 
 	if err != nil {

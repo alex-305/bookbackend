@@ -6,7 +6,9 @@ import (
 	"github.com/alex-305/bookbackend/internal/models"
 )
 
-func Get(reviewid string, tok models.Token, db *db.DB) (models.Review, error) {
+func Get(reviewid models.ReviewID, tok models.Token, db *db.DB) (models.Review, error) {
 	username, _ := token.Validate(tok)
-	return db.GetReview(username, reviewid)
+	userID, _ := db.GetUserID(username)
+
+	return db.GetReview(userID, reviewid)
 }

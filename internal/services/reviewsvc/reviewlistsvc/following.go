@@ -12,6 +12,6 @@ func GetFollowing(tok models.Token, o models.ReviewSortOptions, db *db.DB) ([]mo
 	if err != nil {
 		return []models.Review{}, err
 	}
-
-	return db.GetFollowingReviewList(username, o)
+	userID, err := db.GetUserID(username)
+	return db.GetFollowingReviewList(userID, o)
 }

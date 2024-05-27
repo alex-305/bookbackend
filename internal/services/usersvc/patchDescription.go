@@ -9,21 +9,26 @@ import (
 	"github.com/alex-305/bookbackend/internal/models"
 )
 
-func PatchDescription(username, description string, tok models.Token, db *db.DB) error {
+func PatchDescription(username models.Username, description string, tok models.Token, db *db.DB) error {
 
 	userUsername, err := token.Validate(tok)
 
 	if err != nil {
 		return err
 	}
+	useruserID, err := db.GetUserID(userUsername)
 
-	err = access.HasOwnershipAccess(userUsername, username)
+	userid, err := db.GetUserID(username)
+
+	user, err := db.GetUser(useruserID, userid)
+
+	err = access.HasOwnershipAccess(useruserID, user.UserID)
 
 	if err != nil {
 		return err
 	}
 
-	err = db.UpdateUserDescription(username, description)
+	err = db.UpdateUserDescription(userid, description)
 
 	if err != nil {
 		log.Printf("%s", err)

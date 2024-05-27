@@ -5,6 +5,7 @@ import (
 
 	"github.com/alex-305/bookbackend/internal/db"
 	"github.com/alex-305/bookbackend/internal/handlers/helpers"
+	"github.com/alex-305/bookbackend/internal/models"
 	"github.com/alex-305/bookbackend/internal/services/commentsvc/commentlikesvc"
 	"github.com/gorilla/mux"
 )
@@ -12,7 +13,7 @@ import (
 func HandlePost(w http.ResponseWriter, r *http.Request, db *db.DB) {
 
 	vars := mux.Vars(r)
-	commentid := vars["commentid"]
+	commentid := models.CommentID(vars["commentid"])
 
 	tok, err := helpers.GetToken(r)
 

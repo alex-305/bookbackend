@@ -8,14 +8,26 @@ import (
 	"github.com/alex-305/bookbackend/internal/models"
 )
 
-func PatchPassword(userToUpdate, password string, tok models.Token, db *db.DB) error {
+func PatchPassword(userToUpdate models.Username, password string, tok models.Token, db *db.DB) error {
 	username, err := token.Validate(tok)
 
 	if err != nil {
 		return err
 	}
 
-	err = access.HasOwnershipAccess(username, userToUpdate)
+	userID, err := db.GetUserID(username)
+
+	if err != nil {
+		return err
+	}
+
+	userToUpdateID, err := db.GetUserID(userToUpdate)
+
+	if err != nil {
+		return err
+	}
+
+	err = access.HasOwnershipAccess(userID, userToUpdateID)
 
 	if err != nil {
 		return err
@@ -27,7 +39,7 @@ func PatchPassword(userToUpdate, password string, tok models.Token, db *db.DB) e
 		return err
 	}
 
-	err = db.UpdateUserPassword(username, hashedPassword)
+	err = db.UpdateUserPassword(userID, hashedPassword)
 
 	if err != nil {
 		return err

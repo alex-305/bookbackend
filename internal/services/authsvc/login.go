@@ -8,7 +8,13 @@ import (
 )
 
 func Login(creds models.Credentials, tok models.Token, db *db.DB) (models.Token, error) {
-	dbcreds, err := db.GetCredentials(creds.Username)
+	userID, err := db.GetUserID(creds.Username)
+
+	if err != nil {
+		return "", err
+	}
+
+	dbcreds, err := db.GetCredentials(userID)
 
 	if err != nil {
 		return "", err

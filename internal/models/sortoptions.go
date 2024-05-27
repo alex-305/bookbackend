@@ -46,7 +46,7 @@ type FollowSortBy string
 
 const (
 	Followed    FollowSortBy = "followed"
-	FolPostDate FollowSortBy = "uf1.followdate"
+	FolPostDate FollowSortBy = "uf1.follow_date"
 )
 
 type SortDirection string

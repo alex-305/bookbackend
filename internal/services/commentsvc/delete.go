@@ -7,14 +7,22 @@ import (
 	"github.com/alex-305/bookbackend/internal/models"
 )
 
-func Delete(commentid string, tok models.Token, db *db.DB) error {
+func Delete(commentid models.CommentID, tok models.Token, db *db.DB) error {
 	username, err := token.Validate(tok)
 
 	if err != nil {
 		return err
 	}
 
-	err = access.HasOwnershipAccess(username, commentid)
+	userID, err := db.GetUserID(username)
+
+	if err != nil {
+		return err
+	}
+
+	comment, err := db.GetComment(userID, commentid)
+
+	err = access.HasOwnershipAccess(userID, comment.UserID)
 
 	if err != nil {
 		return err

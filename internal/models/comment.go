@@ -3,15 +3,18 @@ package models
 import "time"
 
 type Comment struct {
+	CommentID CommentID `json:"commentid" gorm:"primaryKey"`
 	Content   string    `json:"content"`
-	Username  string    `json:"username"`
-	CommentID string    `json:"commentid"`
-	ReviewID  string    `json:"reviewid"`
-	Post_date time.Time `json:"post_date"`
+	UserID    UserID    `json:"-"`
+	Username  Username  `json:"username" gorm:"-"`
+	ReviewID  ReviewID  `json:"reviewid"`
+	Post_date time.Time `json:"post_date" gorm:"autoCreateTime"`
 	LikeCount uint      `json:"likecount"`
-	IsLiked   bool      `json:"isliked"`
+	IsLiked   bool      `json:"isliked" gorm:"-"`
 }
 
 type CommentStats struct {
 	CommentCount uint `json:"commentcount"`
 }
+
+type CommentID string

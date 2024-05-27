@@ -1,12 +1,30 @@
 package queries
 
-import "github.com/alex-305/bookbackend/internal/models"
+import (
+	"github.com/alex-305/bookbackend/internal/models"
+	"gorm.io/gorm"
+)
 
-func GetReview(ap models.AttributeParam) string {
-	return `SELECT r.username, r.volumeid, r.reviewid, r.content, r.rating, r.post_date, r.likecount,
-	CASE WHEN ulr.username IS NOT NULL THEN TRUE ELSE FALSE END AS isLiked FROM reviews r LEFT JOIN user_likes_review ulr ON r.reviewid=ulr.reviewid AND ulr.username=$1 WHERE r.` + ap.Attribute + `= $2`
+func FromReview() string {
+	return `reviews r`
 }
 
-func GetFollowingReviews() string {
-	return `SELECT r.username, r.volumeid, r.reviewid, r.content, r.rating, r.post_date, r.likecount, CASE WHEN ulr.username IS NOT NULL THEN TRUE ELSE FALSE END AS isLiked FROM reviews r LEFT JOIN user_follows_user ufu ON r.username=ufu.followed LEFT JOIN user_likes_review ulr on r.reviewid=ulr.reviewid AND ulr.username=$1 WHERE ufu.follower=$1`
+func ReviewTableName() string {
+	return `r`
+}
+
+func SelectReview() string {
+	return `r.userid, r.volumeid, r.reviewid, r.content, r.rating, r.post_date, r.likecount, CASE WHEN ulr.userid IS NOT NULL THEN TRUE ELSE FALSE END AS isLiked`
+}
+
+func JoinReviewLikes() string {
+	return ` LEFT JOIN user_likes_review ulr ON r.reviewid=ulr.reviewid AND ulr.userid = ? `
+}
+
+func JoinReviewFollowing() string {
+	return ` LEFT JOIN user_follows_user ufu ON r.userid=ufu.followedid `
+}
+
+func ChangeReviewLikeCount(reviewid models.ReviewID, g *gorm.DB, change int8) *gorm.DB {
+	return g.Model(&models.Comment{}).Where(("reviewid = ?"), reviewid).Update("likecount", gorm.Expr("likecount+?", change))
 }
