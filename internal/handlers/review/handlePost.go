@@ -19,7 +19,7 @@ func HandlePost(w http.ResponseWriter, r *http.Request, db *db.DB) {
 		return
 	}
 
-	var rev models.Review
+	var rev models.NewReview
 	err = json.NewDecoder(r.Body).Decode(&rev)
 
 	if err != nil {

@@ -14,7 +14,7 @@ func ReviewTableName() string {
 }
 
 func SelectReview() string {
-	return `r.userid, r.volumeid, r.reviewid, r.content, r.rating, r.post_date, r.likecount, CASE WHEN ulr.userid IS NOT NULL THEN TRUE ELSE FALSE END AS isLiked`
+	return `u.username AS username r.userid, r.volumeid, r.reviewid, r.content, r.rating, r.post_date, r.likecount, CASE WHEN ulr.userid IS NOT NULL THEN TRUE ELSE FALSE END AS isLiked`
 }
 
 func JoinReviewLikes() string {

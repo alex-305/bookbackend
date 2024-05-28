@@ -13,6 +13,14 @@ type Comment struct {
 	IsLiked   bool      `json:"isliked" gorm:"-"`
 }
 
+type NewComment struct {
+	CommentID CommentID `json:"commentid" gorm:"primaryKey"`
+	Content   string    `json:"content"`
+	UserID    UserID    `json:"-"`
+	Username  Username  `json:"username" gorm:"-"`
+	ReviewID  ReviewID  `json:"reviewid"`
+}
+
 type CommentStats struct {
 	CommentCount uint `json:"commentcount"`
 }

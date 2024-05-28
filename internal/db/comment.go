@@ -1,30 +1,22 @@
 package db
 
 import (
-	"errors"
 	"log"
 
 	"github.com/alex-305/bookbackend/internal/db/queries"
 	"github.com/alex-305/bookbackend/internal/models"
 )
 
-func (db *DB) PostComment(c models.Comment) (models.CommentID, error) {
-	if c.Content == "" {
-		return "", errors.New("content cannot be empty")
-	}
-	newComment := models.Comment{
-		Content:  c.Content,
-		ReviewID: c.ReviewID,
-		UserID:   c.UserID,
-	}
-	result := db.Create(&newComment)
+func (db *DB) PostComment(com models.NewComment) (models.CommentID, error) {
 
-	if result.Error != nil {
-		log.Printf("%s", result.Error)
-		return "", result.Error
+	err := db.Table("comments").Create(&com).Error
+
+	if err != nil {
+		log.Printf("%s", err)
+		return "", err
 	}
 
-	return newComment.CommentID, nil
+	return com.CommentID, nil
 }
 
 func (db *DB) DeleteComment(commentid models.CommentID) error {

@@ -8,7 +8,7 @@ import (
 	"github.com/alex-305/bookbackend/internal/models"
 )
 
-func Post(rev models.Review, tok models.Token, d *db.DB) (models.ReviewID, error) {
+func Post(rev models.NewReview, tok models.Token, d *db.DB) (models.ReviewID, error) {
 	username, err := token.Validate(tok)
 
 	if err != nil {

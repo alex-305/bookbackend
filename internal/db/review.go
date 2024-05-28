@@ -5,20 +5,15 @@ import (
 	"github.com/alex-305/bookbackend/internal/models"
 )
 
-func (db *DB) PostReview(userID models.UserID, rev models.Review) (models.ReviewID, error) {
-	newReview := models.Review{
-		Content: rev.Content,
-		Rating:  rev.Rating,
-		UserID:  userID,
-	}
+func (db *DB) PostReview(userID models.UserID, rev models.NewReview) (models.ReviewID, error) {
 
-	err := db.Create(&newReview).Error
+	err := db.Table("users").Create(&rev).Error
 
 	if err != nil {
 		return "", err
 	}
 
-	return newReview.ReviewID, nil
+	return rev.ReviewID, nil
 }
 
 func (db *DB) DeleteReview(reviewid models.ReviewID) error {

@@ -12,7 +12,7 @@ func (db DB) GetUserReviewList(useruserID models.UserID, userID models.UserID, o
 	err := db.Table(queries.FromReview()).
 		Select(queries.SelectReview()).
 		Joins(queries.JoinReviewLikes(), useruserID).
-		//Joins(queries.JoinForUsername(queries.ReviewTableName())).
+		Joins(queries.JoinForUsername(queries.ReviewTableName())).
 		Where(`r.userid=?`, userID).
 		Order(string(o.By) + " " + string(o.Direction)).
 		Limit(int(o.Limit)).
@@ -33,7 +33,7 @@ func (db DB) GetBookReviewList(userID models.UserID, volumeID models.VolumeID, o
 	err := db.Table(queries.FromReview()).
 		Select(queries.SelectReview()).
 		Joins(queries.JoinReviewLikes(), userID).
-		//Joins(queries.JoinForUsername(queries.ReviewTableName())).
+		Joins(queries.JoinForUsername(queries.ReviewTableName())).
 		Where(`r.volumeid=?`, volumeID).
 		Order(string(o.By) + " " + string(o.Direction)).
 		Limit(int(o.Limit)).

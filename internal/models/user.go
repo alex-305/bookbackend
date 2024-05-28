@@ -11,9 +11,9 @@ type User struct {
 	Email          string    `json:"email" gorm:"unique;not null"`
 	Description    string    `json:"description"`
 	Join_date      time.Time `json:"join_date" gorm:"autoCreateTime"`
-	FollowerCount  uint      `json:"followercount" column:"followercount"`
-	FollowingCount uint      `json:"followingcount" column:"followingcount"`
-	IsFollowing    bool      `json:"isfollowing" gorm:"-"`
+	FollowerCount  uint      `json:"followercount" gorm:"column:followercount"`
+	FollowingCount uint      `json:"followingcount" gorm:"column:followingcount"`
+	IsFollowing    bool      `json:"isfollowing" gorm:"column:isfollowing"`
 }
 
 func CredsToUser(creds Credentials) User {

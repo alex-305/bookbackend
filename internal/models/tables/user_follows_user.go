@@ -7,7 +7,7 @@ import (
 )
 
 type User_follows_user struct {
-	FollowerID  models.UserID `gorm:"primaryKey"`
+	FollowerID  models.UserID `gorm:"primaryKey;column:followerid"`
 	Follow_date time.Time     `gorm:"autoCreateTime"`
-	FollowedID  models.UserID `gorm:"primaryKey"`
+	FollowedID  models.UserID `gorm:"primaryKey;column:followedid"`
 }

@@ -14,7 +14,7 @@ import (
 
 func HandlePost(w http.ResponseWriter, r *http.Request, d *db.DB) {
 
-	var c models.Comment
+	var c models.NewComment
 
 	vars := mux.Vars(r)
 	c.ReviewID = models.ReviewID(vars["reviewid"])
